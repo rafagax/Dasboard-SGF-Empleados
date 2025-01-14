@@ -19,7 +19,7 @@ function TopUrbanismo() {
   const [handleGrafico2, setHandleGrafico2] = useState(true);
   const [migradosSeleccionados, setMigradosSeleccionados] = useState(["Todos"]);
   const [ciclosSeleccionados, setCiclosSeleccionados] = useState(["Todos"]);
-  const [mostrarLista, setMostrarLista] = useState(true); // Estado para mostrar/ocultar la lista
+  const [mostrarLista, setMostrarLista] = useState(false); // Estado para mostrar/ocultar la lista
 
   const handleTop10Urb = () => {
     setTopUrb([0, 10]);
