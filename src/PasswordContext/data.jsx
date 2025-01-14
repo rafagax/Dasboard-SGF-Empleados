@@ -12944,7 +12944,7 @@ const largeArraydata =
             "id": 6622,
             "client_name": "YSVET YARITZA MARVAL GARCIA",
             "client_type_name": "EMPLEADO",
-            "status_name": "Activo",
+            "status_name": "Suspendido",
             "cycle": 25,
             "migrate": false,
             "sector_name": "La Casona II",
@@ -47493,11 +47493,11 @@ const largeArraydata =
             "migrate": true,
             "sector_name": "Vallecito",
             "plan": {
-                "id": 3,
-                "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-                "cost": "35.00",
-                "code": "FOR450",
-                "profile": "450M/450M"
+                "id": 21,
+                "name": "RECURRENTE RESIDENCIAL PLAN 250M",
+                "cost": "30.00",
+                "code": "FOR250",
+                "profile": "250M/250M"
             },
             "client_mobile": "04125987204"
         },
