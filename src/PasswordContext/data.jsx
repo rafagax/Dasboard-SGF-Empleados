@@ -1,8 +1,8 @@
+
 const largeArraydata = 
 {
-    count: 30000,
-    results: 
-[
+    count: 4124,
+    results: [
         {
             "id": 7392,
             "client_name": "KETHERINE ESTHEFANNY ORTIZ LOPEZ",
@@ -359,7 +359,7 @@ const largeArraydata =
             "id": 7370,
             "client_name": "MANOLO ALEXANDER CORREA HERNANDEZ",
             "client_type_name": "RESIDENCIAL",
-            "status_name": "Suspendido",
+            "status_name": "Activo",
             "cycle": 15,
             "migrate": false,
             "sector_name": "Durpa",
@@ -1095,7 +1095,7 @@ const largeArraydata =
             "id": 7324,
             "client_name": "MARIA ARGELYS CARRILLO MECIA",
             "client_type_name": "RESIDENCIAL",
-            "status_name": "Activo",
+            "status_name": "Suspendido",
             "cycle": 25,
             "migrate": false,
             "sector_name": "Mata Caballo",
@@ -5191,7 +5191,7 @@ const largeArraydata =
             "id": 7068,
             "client_name": "JONATHAN MOISES RODRIGUEZ MARTINEZ",
             "client_type_name": "RESIDENCIAL",
-            "status_name": "Activo",
+            "status_name": "Suspendido",
             "cycle": 25,
             "migrate": false,
             "sector_name": "Residencias Candys",
@@ -8823,7 +8823,7 @@ const largeArraydata =
             "id": 6835,
             "client_name": "BIENVENIDO PEREZ RINCON",
             "client_type_name": "RESIDENCIAL",
-            "status_name": "Suspendido",
+            "status_name": "Activo",
             "cycle": 25,
             "migrate": false,
             "sector_name": "Mata Caballo",
@@ -10726,17 +10726,17 @@ const largeArraydata =
         {
             "id": 6713,
             "client_name": "WISMAR YORIANA BARRERA HIDALGO",
-            "client_type_name": "EMPLEADO",
+            "client_type_name": "RESIDENCIAL",
             "status_name": "Suspendido",
             "cycle": 25,
             "migrate": false,
             "sector_name": "Casco de Turmero",
             "plan": {
-                "id": 78,
-                "name": "Plan empleado 80MB",
-                "cost": "0.00",
-                "code": "FO-80M",
-                "profile": "80M/80M"
+                "id": 3,
+                "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+                "cost": "35.00",
+                "code": "FOR450",
+                "profile": "450M/450M"
             }
         },
         {
@@ -65989,5 +65989,5 @@ const largeArraydata =
         }
     ]
 }
-  
-  export default largeArraydata;
+
+export default largeArraydata;
