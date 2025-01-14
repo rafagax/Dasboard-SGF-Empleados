@@ -19,7 +19,6 @@ function TopUrbanismo() {
   const [handleGrafico2, setHandleGrafico2] = useState(true);
   const [migradosSeleccionados, setMigradosSeleccionados] = useState(["Todos"]);
   const [ciclosSeleccionados, setCiclosSeleccionados] = useState(["Todos"]);
-  const [mostrarLista, setMostrarLista] = useState(false); // Estado para mostrar/ocultar la lista
 
   const handleTop10Urb = () => {
     setTopUrb([0, 10]);
@@ -30,38 +29,26 @@ function TopUrbanismo() {
   };
 
   const handleMigradosChange = (event) => {
-    const selectedOptions = Array.from(
-      event.target.selectedOptions,
-      (option) => option.value
-    );
+    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
     setMigradosSeleccionados(selectedOptions);
   };
 
   const handleEstadoChange = (event) => {
-    const selectedOptions = Array.from(
-      event.target.selectedOptions,
-      (option) => option.value
-    );
+    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
     setEstadosSeleccionados(selectedOptions);
   };
 
   const toggleGraficos = () => {
-    setHandleGrafico2(!handleGrafico2); // Alternar entre true y false
+    setHandleGrafico2(!handleGrafico2); 
   };
 
   const handleEstadoChange2 = (event) => {
-    const selectedOptions2 = Array.from(
-      event.target.selectedOptions,
-      (option) => option.value
-    );
+    const selectedOptions2 = Array.from(event.target.selectedOptions, (option) => option.value);
     setEstadosSeleccionadosType(selectedOptions2);
   };
 
   const handleCiclosChange = (event) => {
-    const selectedOptions = Array.from(
-      event.target.selectedOptions,
-      (option) => option.value
-    );
+    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
     setCiclosSeleccionados(selectedOptions);
   };
 
@@ -70,18 +57,10 @@ function TopUrbanismo() {
 
     const urbanismosTotales = data.results
       .filter((servicio) => {
-        const estadoFiltrado =
-          estadosSeleccionados.includes("Todos") ||
-          estadosSeleccionados.includes(servicio.status_name);
-        const tipoFiltrado =
-          estadosSeleccionadosType.includes("Todos") ||
-          estadosSeleccionadosType.includes(servicio.client_type_name);
-        const migradoFiltrado =
-          migradosSeleccionados.includes("Todos") ||
-          migradosSeleccionados.includes(servicio.migrate ? "Migrado" : "No migrado");
-        const cicloFiltrado =
-          ciclosSeleccionados.includes("Todos") ||
-          ciclosSeleccionados.includes(servicio.cycle ? servicio.cycle.toString() : ""); // Verificación para null
+        const estadoFiltrado = estadosSeleccionados.includes("Todos") || estadosSeleccionados.includes(servicio.status_name);
+        const tipoFiltrado = estadosSeleccionadosType.includes("Todos") || estadosSeleccionadosType.includes(servicio.client_type_name);
+        const migradoFiltrado = migradosSeleccionados.includes("Todos") || migradosSeleccionados.includes(servicio.migrate ? "Migrado" : "No migrado");
+        const cicloFiltrado = ciclosSeleccionados.includes("Todos") || ciclosSeleccionados.includes(servicio.cycle ? servicio.cycle.toString() : "");
 
         return estadoFiltrado && tipoFiltrado && migradoFiltrado && cicloFiltrado;
       })
@@ -92,36 +71,26 @@ function TopUrbanismo() {
             ingresosTotales: parseFloat(curr.plan.cost),
             estado: curr.status_name,
             tipo: curr.client_type_name,
-            clientes: [curr] // Agregar el cliente a la lista
+            clientes: [curr]
           };
         } else {
           acc[curr.sector_name].cantidadClientes++;
           acc[curr.sector_name].ingresosTotales += parseFloat(curr.plan.cost);
-          acc[curr.sector_name].clientes.push(curr); // Agregar cliente a la lista existente
+          acc[curr.sector_name].clientes.push(curr);
         }
         return acc;
       }, {});
 
-    const urbanismosTotalesArray = Object.keys(urbanismosTotales).map(
-      (sector) => ({
-        urbanismo: sector,
-        ...urbanismosTotales[sector],
-      })
-    );
+    const urbanismosTotalesArray = Object.keys(urbanismosTotales).map((sector) => ({
+      urbanismo: sector,
+      ...urbanismosTotales[sector],
+    }));
 
-    urbanismosTotalesArray.sort(
-      (a, b) => b.ingresosTotales - a.ingresosTotales
-    );
+    urbanismosTotalesArray.sort((a, b) => b.ingresosTotales - a.ingresosTotales);
 
     const topUrbanismosCalculados = urbanismosTotalesArray.slice(...TopUrb);
-    const ingresosTotalesCalculados = urbanismosTotalesArray.reduce(
-      (acc, curr) => acc + curr.ingresosTotales,
-      0
-    );
-    const totalClientes = urbanismosTotalesArray.reduce(
-      (acc, curr) => acc + curr.cantidadClientes,
-      0
-    );
+    const ingresosTotalesCalculados = urbanismosTotalesArray.reduce((acc, curr) => acc + curr.ingresosTotales, 0);
+    const totalClientes = urbanismosTotalesArray.reduce((acc, curr) => acc + curr.cantidadClientes, 0);
 
     setTotalClientesGlobal(totalClientes);
     setTotalIngresos(ingresosTotalesCalculados);
@@ -144,22 +113,11 @@ function TopUrbanismo() {
           <DropdownMenu />
           <PageNav />
           <div>
-            <button className="button" type="submit" onClick={handleTop10Urb}>
-              Top 10
-            </button>
-            <button className="button" type="submit" onClick={handleTopUrb}>
-              Top Global
-            </button>
+            <button className="button" type="submit" onClick={handleTop10Urb}>Top 10</button>
+            <button className="button" type="submit" onClick={handleTopUrb}>Top Global</button>
           </div>
 
-          <select
-            id="estadoSelect"
-            size="5"
-            multiple
-            value={estadosSeleccionados}
-            onChange={handleEstadoChange}
-            style={{ fontSize: '12px' }}
-          >
+          <select id="estadoSelect" size="5" multiple value={estadosSeleccionados} onChange={handleEstadoChange} style={{ fontSize: '12px' }}>
             <option value="Todos">Todos</option>
             <option value="Activo">Activos</option>
             <option value="Suspendido">Suspendidos</option>
@@ -168,92 +126,53 @@ function TopUrbanismo() {
             <option value="Cancelado">Cancelados</option>
           </select>
 
-          <select
-            id="estadoSelect2"
-            size="5"
-            multiple
-            value={estadosSeleccionadosType}
-            onChange={handleEstadoChange2}
-            style={{ fontSize: '10px' }}
-          >
+          <select id="estadoSelect2" size="5" multiple value={estadosSeleccionadosType} onChange={handleEstadoChange2} style={{ fontSize: '10px' }}>
             <option value="Todos">Tipo de Cliente/Todos</option>
             <option value="PYME">Pyme</option>
             <option value="RESIDENCIAL">Residenciales</option>
             <option value="INTERCAMBIO">Institucionales</option>
           </select>
 
-          <select
-            id="migradosSelect"
-            size="2"
-            multiple
-            value={migradosSeleccionados}
-            onChange={handleMigradosChange}
-            style={{ fontSize: '12px' }}
-          >
+          <select id="migradosSelect" size="2" multiple value={migradosSeleccionados} onChange={handleMigradosChange} style={{ fontSize: '12px' }}>
             <option value="Todos">Todos</option>
             <option value="Migrado">Migrados</option>
             <option value="No migrado">No migrados</option>
           </select>
 
-          <select
-            id="ciclosSelect"
-            size="3"
-            multiple
-            value={ciclosSeleccionados}
-            onChange={handleCiclosChange}
-            style={{ fontSize: '12px' }}
-          >
+          <select id="ciclosSelect" size="3" multiple value={ciclosSeleccionados} onChange={handleCiclosChange} style={{ fontSize: '12px' }}>
             <option value="Todos">Todos</option>
             <option value="15">Ciclo 15</option>
             <option value="25">Ciclo 25</option>
           </select>
 
-          <button className="buttonIngreso">
-            Total de clientes: {totalClientesGlobal}
-          </button>
+          <button className="buttonIngreso">Total de clientes: {totalClientesGlobal}</button>
           {estadosSeleccionados.includes("Cancelado") ? (
-            <button className="buttonIngreso marginbutton">
-              Total de Pérdida:{" "}
-              {totalIngresos.toLocaleString("es-ES", {
-                minimumFractionDigits: 2,
-              })}$
-            </button>
+            <button className="buttonIngreso marginbutton">Total de Pérdida: {totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$</button>
           ) : (
-            <button className="buttonIngreso marginbutton">
-              Total de Ingresos:{" "}
-              {totalIngresos.toLocaleString("es-ES", {
-                minimumFractionDigits: 2,
-              })}$
-            </button>
+            <button className="buttonIngreso marginbutton">Total de Ingresos: {totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$</button>
           )}
 
-          <button
-            className={!handleGrafico2 ? "button" : "buttonCerrar"}
-            onClick={toggleGraficos}
-          >
+          <button className={!handleGrafico2 ? "button" : "buttonCerrar"} onClick={toggleGraficos}>
             {handleGrafico2 ? "Cerrar Gráficos" : "Abrir Gráficos"}
           </button>
 
-          {/* Botón para mostrar/ocultar lista */}
-          <button
-            onClick={() => setMostrarLista((prev) => !prev)}
-            className="mostrar-ocultar"
-          >
-            {mostrarLista ? "Ocultar Lista" : "Mostrar Lista"}
-          </button>
-
           {handleGrafico2 && <ChartComponent urbanismos={topUrbanismos} />}
-          <h3 className="h3"> Top Urbanismos</h3>
+          <h3 className="h3">Top Urbanismos</h3>
 
-          {/* Pasa 'mostrarLista' como prop */}
-          <UrbanismoList urbanismos={topUrbanismos} mostrarLista={mostrarLista} />
+          <UrbanismoList urbanismos={topUrbanismos} />
         </>
       )}
     </div>
   );
 }
 
-function UrbanismoList({ urbanismos, mostrarLista }) {
+function UrbanismoList({ urbanismos }) {
+  const [mostrarLista, setMostrarLista] = useState({});
+
+  const toggleMostrarLista = (index) => {
+    setMostrarLista((prevState) => ({ ...prevState, [index]: !prevState[index] }));
+  };
+
   return (
     <ul>
       {urbanismos.map((urbanismo, index) => (
@@ -261,44 +180,35 @@ function UrbanismoList({ urbanismos, mostrarLista }) {
           <span className="urbanismo-nombre">
             {index + 1}. {urbanismo.urbanismo}
           </span>
+
           <br />
           <div className="encabezados">
-            <span>
-              <strong>Cantidad de Clientes:</strong>{" "}
-              {urbanismo.cantidadClientes}
-            </span>
+            <span><strong>Cantidad de Clientes:</strong> {urbanismo.cantidadClientes}</span>
             <br />
             {!(
               urbanismo.estado === "Cancelado" || urbanismo.estado === "Gratis"
             ) && (
-              <span>
-                <strong>Ingreso total:</strong>{" "}
-                {Math.round(urbanismo.ingresosTotales)}$
-              </span>
+              <span><strong>Ingreso total:</strong> {Math.round(urbanismo.ingresosTotales)}$</span>
             )}
           </div>
-          <div>
-            {/* Mostrar la lista de clientes si 'mostrarLista' es true */}
-            {mostrarLista && (
-              <ul className="lista-clientes">
-                {urbanismo.clientes?.map((cliente, index) => (
-                  <li key={index}>
-                    <p>
-                      <strong>Nombre:</strong> {cliente.client_name}
-                    </p>
-                    <p>
-                      <strong>Estado:</strong> {cliente.status_name}
-                    </p>
-                    <p>
-                      <strong>Sector:</strong> {cliente.sector_name}
-                    </p>
-                    <p>
-                      <strong>Plan:</strong> {cliente.plan.name} (${cliente.plan.cost})
-                    </p>
-                    <p>
-  <strong>Teléfono:</strong> {cliente.client_mobile} {/* Aquí se agrega el teléfono */}
-</p>
 
+          <button
+            onClick={() => toggleMostrarLista(index)}
+            className="mostrar-ocultar"
+          >
+            {mostrarLista[index] ? "Ocultar Lista" : "Mostrar Lista"}
+          </button>
+
+          <div>
+            {mostrarLista[index] && (
+              <ul className="lista-clientes">
+                {urbanismo.clientes.map((cliente, idx) => (
+                  <li key={idx}>
+                    <p><strong>Nombre:</strong> {cliente.client_name}</p>
+                    <p><strong>Estado:</strong> {cliente.status_name}</p>
+                    <p><strong>Sector:</strong> {cliente.sector_name}</p>
+                    <p><strong>Plan:</strong> {cliente.plan.name} (${cliente.plan.cost})</p>
+                    <p><strong>Teléfono:</strong> {cliente.client_mobile}</p>
                   </li>
                 ))}
               </ul>
