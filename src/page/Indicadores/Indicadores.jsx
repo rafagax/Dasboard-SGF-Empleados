@@ -1,60 +1,50 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PageNav from "../../Componentes/PageNav";
 import LogoTitulo from "../../Componentes/LogoTitulo";
 import { PasswordContext } from "../../PasswordContext/PasswordContext";
-import "./Indicadores.css"; // Archivo CSS para los estilos específicos de este componente
 import Loging from "../Loging/Loging";
-import Api from "../../Componentes/Api";
 import DropdownMenu from "../../Componentes/DropdownMenu";
+import "./Indicadores.css"; // Archivo CSS para los estilos específicos de este componente
 
-function Indicadores(props) {
+function Indicadores() {
   const { showPasswordState, data } = useContext(PasswordContext);
 
-  // Estados para los indicadores y visibilidad de la API
-  const [clientesActivos, setClientesActivos] = useState(0);
-  const [clientesCancelados, setClientesCancelados] = useState(0);
-  const [clientesSuspendidos, setClientesSuspendidos] = useState(0);
-  const [clientesPorInstalar, setClientesPorInstalar] = useState(0);
-  const [mostrarApi, setMostrarApi] = useState(false);
+  const [clientesFiltrados, setClientesFiltrados] = useState([]);
+  const [tipoFiltro, setTipoFiltro] = useState("Todos"); // Estado para el filtro
+  const [mostrarLista, setMostrarLista] = useState(true); // Estado para mostrar/ocultar la lista
 
-  // Función para calcular y actualizar los indicadores
+  // Función para filtrar clientes por tipo
+  const filtrarClientes = (tipo) => {
+    if (tipo === "Todos") {
+      setClientesFiltrados(data.results || []);
+    } else {
+      const filtrados = (data.results || []).filter(
+        (cliente) => cliente.status_name === tipo
+      );
+      setClientesFiltrados(filtrados);
+    }
+    setTipoFiltro(tipo);
+  };
+
+  // Contar clientes por estado
+  const contarEstados = () => {
+    const conteo = { Todos: data?.results?.length || 0 };
+    if (data && data.results) {
+      data.results.forEach((cliente) => {
+        conteo[cliente.status_name] = (conteo[cliente.status_name] || 0) + 1;
+      });
+    }
+    return conteo;
+  };
+
+  const conteos = contarEstados();
+
+  // Cargar todos los clientes al inicio
   useEffect(() => {
     if (data && data.results) {
-      let activos = 0;
-      let cancelados = 0;
-      let suspendidos = 0;
-      let porInstalar = 0;
-
-      data.results.forEach((cliente) => {
-        switch (cliente.status_name) {
-          case "Activo":
-            activos++;
-            break;
-          case "Cancelado":
-            cancelados++;
-            break;
-          case "Suspendido":
-            suspendidos++;
-            break;
-          case "Por instalar":
-            porInstalar++;
-            break;
-          default:
-            break;
-        }
-      });
-
-      setClientesActivos(activos);
-      setClientesCancelados(cancelados);
-      setClientesSuspendidos(suspendidos);
-      setClientesPorInstalar(porInstalar);
+      setClientesFiltrados(data.results);
     }
   }, [data]);
-
-  // Función para alternar la visibilidad de la API
-  const toggleMostrarApi = () => {
-    setMostrarApi(!mostrarApi);
-  };
 
   return (
     <div>
@@ -69,33 +59,63 @@ function Indicadores(props) {
           <DropdownMenu />
           <PageNav />
 
-          {/* Indicadores de clientes */}
-          <ul className="urbanismo-item encabezados">
-            <li>
-              <h4>Clientes Activos</h4>
-              <p>{clientesActivos}</p>
-            </li>
-            <li>
-              <h4>Clientes Cancelados</h4>
-              <p>{clientesCancelados}</p>
-            </li>
-            <li>
-              <h4>Clientes Suspendidos</h4>
-              <p>{clientesSuspendidos}</p>
-            </li>
-            <li>
-              <h4>Clientes Por Instalar</h4>
-              <p>{clientesPorInstalar}</p>
-            </li>
-          </ul>
+          <h2>Indicadores de Clientes</h2>
 
-          {/* Botón para mostrar/ocultar la API */}
-          <button onClick={toggleMostrarApi} className="buttonMenuIndicadores">
-            {mostrarApi ? "Ocultar Lista de clientes" : "Cargar Lista de clientes"}
+          {/* Mostrar el conteo de clientes por estado */}
+          <div className="conteos">
+            <p>Total de clientes: {conteos.Todos}</p>
+            {Object.keys(conteos).map(
+              (estado) =>
+                estado !== "Todos" && (
+                  <p key={estado}>
+                    {estado}: {conteos[estado]}
+                  </p>
+                )
+            )}
+          </div>
+
+          {/* Botones de filtro */}
+          <div className="filtros">
+            {Object.keys(conteos).map((estado) => (
+              <button
+                key={estado}
+                onClick={() => filtrarClientes(estado)}
+                className={tipoFiltro === estado ? "activo" : ""}
+              >
+                {estado}
+              </button>
+            ))}
+          </div>
+
+          {/* Botón para mostrar/ocultar lista */}
+          <button
+            onClick={() => setMostrarLista((prev) => !prev)}
+            className="mostrar-ocultar"
+          >
+            {mostrarLista ? "Ocultar Lista" : "Mostrar Lista"}
           </button>
 
-          {/* Componente Api para mostrar la lista de clientes */}
-          {mostrarApi && <Api />}
+          {/* Lista de clientes filtrados */}
+          {mostrarLista && (
+            <ul className="lista-clientes">
+              {clientesFiltrados.map((cliente) => (
+                <li key={cliente.id}>
+                  <p>
+                    <strong>Nombre:</strong> {cliente.client_name}
+                  </p>
+                  <p>
+                    <strong>Estado:</strong> {cliente.status_name}
+                  </p>
+                  <p>
+                    <strong>Sector:</strong> {cliente.sector_name}
+                  </p>
+                  <p>
+                    <strong>Plan:</strong> {cliente.plan.name} (${cliente.plan.cost})
+                  </p>
+                </li>
+              ))}
+            </ul>
+          )}
         </>
       )}
     </div>
@@ -103,4 +123,3 @@ function Indicadores(props) {
 }
 
 export default Indicadores;
-

@@ -64,3 +64,55 @@
 .buttonMenu:hover {
   background-color: #1c0cf3; /* Verde más oscuro */
 }
+.filtros-container {
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.filtro-select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+.conteos p {
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+.filtros button {
+  margin: 5px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filtros button.activo {
+  background-color: #007bff;
+  color: white;
+}
+
+.mostrar-ocultar {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.lista-clientes {
+  list-style-type: none;
+  padding: 0;
+}
+
+.lista-clientes li {
+  border: 1px solid #ccc;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+}
