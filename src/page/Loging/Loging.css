@@ -1,0 +1,30 @@
+.login-form {
+  background-color: #f9f9f9;
+  padding: 40px;
+  border-radius: 45px;
+  width: 180px;
+  margin: 0 auto; /* Esto centrará el formulario horizontalmente */
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 768px) {
+  .login-form {
+    width: 60%;
+  }
+}

@@ -1,0 +1,71 @@
+.container {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+.login-Titulo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Alinea el contenido a la izquierda */
+}
+
+.logo-container {
+  width: 70px; /* Ajusta el tamaño del contenedor del logo */
+  margin-right: 10px; /* Espacio entre el logo y el texto */
+}
+
+h1 {
+  font-size: 24px;
+  color: #ffffff;
+  margin: 0;
+}
+/* LogoTitulo.css */
+
+.container {
+  display: flex; /* Uso de flexbox para alineación */
+  justify-content: center; /* Centra el contenido horizontalmente */
+  align-items: center; /* Centra el contenido verticalmente */
+  padding: 20px; /* Espacio alrededor del contenido */
+}
+
+.login-Titulo {
+  display: flex; /* Habilita flexbox para los elementos internos */
+  align-items: center; /* Alinea los elementos verticalmente en el centro */
+  gap: 10px; /* Espacio entre el logo y el título */
+}
+
+.logo-container {
+  width: 120px; /* Ancho del logo */
+  height: auto; /* Mantiene la proporción del logo */
+}
+
+
+@media (max-width: 768px) {
+  .logo-container {
+    width: 80px; /* Reduce el tamaño del logo para pantallas más pequeñas */
+  }
+
+  h1 {
+    font-size: 18px; /* Reduce el tamaño del texto del título */
+      color: #ffffff; /* Color blanco para el texto */
+      margin: 0; /* Elimina el margen para evitar espacios innecesarios */
+  
+  
+}}
+
+@media (max-width: 480px) {
+  .login-Titulo {
+    flex-direction: column; /* Cambia la disposición a vertical */
+  }
+
+  .logo-container {
+    width: 60px; /* Reduce aún más el tamaño del logo para dispositivos muy pequeños */
+  }
+
+  h1 {
+    font-size: 16px; /* Reduce aún más el tamaño del texto del título */
+    color: #ffffff; /* Color blanco para el texto */
+      margin: 0; /* Elimina el margen para evitar espacios innecesarios */
+  }
+}

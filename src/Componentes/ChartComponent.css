@@ -1,0 +1,30 @@
+/* ChartComponent.css */
+
+/* Contenedor del gráfico */
+#myChart {
+    width: 90% !important; /* Asegura que el gráfico se adapta al contenedor */
+    height: auto ;
+    position: relative;
+    z-index: 2;
+  }
+  
+  @media (max-width: 768px) {
+    /* Estilos para dispositivos medianos (tablets) */
+    #myChart {
+      min-height: 10px; /* Menor altura para dispositivos con pantalla más pequeña */
+      position: relative;
+      z-index: 2;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    /* Estilos para dispositivos pequeños (teléfonos móviles) */
+    #myChart {
+      min-height: 10px; /* Menor altura para pantallas muy pequeñas */
+      position: relative;
+      margin-top: -50px;
+      z-index: 2;
+     
+    }
+  }
+  

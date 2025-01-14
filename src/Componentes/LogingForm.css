@@ -1,0 +1,45 @@
+.login-form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px; /* Limitar el ancho máximo del formulario */
+    margin: 0 auto; /* Centrar el formulario horizontalmente */
+  }
+  
+  .login-form label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .login-form input {
+    width: calc(100% - 22px); /* Restar el ancho del padding de 10px en cada lado */
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+  }
+  .login-form button {
+    width: calc(50% - 22px);
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: auto;
+    display: flex;
+    text-align: center;
+    justify-content: space-around;
+  }
+  
+  .login-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  @media screen and (max-width: 480px) {
+    .login-form {
+      padding: 15px; /* Ajustar el padding para pantallas más pequeñas */
+    }
+  }
+  

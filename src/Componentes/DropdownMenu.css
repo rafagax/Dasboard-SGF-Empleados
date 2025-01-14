@@ -1,0 +1,101 @@
+/* DropdownMenu.css */
+.dropdown-container {
+  position: relative;
+}
+
+/* Botón del menú desplegable */
+.dropdown-button {
+  background-color: #290fb9cc;
+  color: #cccccc;
+  border: 1px solid #cccccc;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: -90px;
+  left: auto;
+  right: 20px;
+}
+
+/* Icono del menú */
+.menu-icon {
+  margin-right: 5px;
+}
+
+/* Contenido del menú desplegable */
+.dropdown-content {
+  position: absolute;
+  top: -65px;
+  left: auto;
+  right: 0;
+  background-color: #0d0d0ecc;
+  border: 1px solid #cccccc;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+  padding: 10px 0;
+  list-style: none;
+  width: 150px; /* Ajusta el ancho según necesites */
+  display: none; /* Oculto por defecto */
+}
+
+/* Enlaces del menú desplegable */
+.dropdown-link {
+  color: #cccccc;
+  text-decoration: none;
+  display: block;
+  padding: 8px 15px;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-link:hover {
+  background-color: #f0f0f0;
+  color: black;
+}
+
+/* Botón del menú */
+.buttonMenu {
+  background-color: #091183; /* Verde */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition-duration: 0.4s;
+  position: absolute;
+  top: 5%;
+  left: 300px;
+  min-width: 60px;
+  z-index: 1;
+}
+
+/* Hover del botón del menú */
+.buttonMenu:hover {
+  background-color: #1c0cf3; /* Verde más oscuro */
+}
+
+/* Media query para ocultar el menú en pantallas mayores a 450px */
+@media screen and (min-width: 451px) {
+  .dropdown-container {
+    display: none;
+  }
+}
+
+/* Media query para mostrar el botón del menú en pantallas menores a 450px */
+@media screen and (max-width: 450px) {
+  .dropdown-container {
+    display: block;
+  }
+
+  .dropdown-content {
+    display: none;
+  }
+
+  .dropdown-container.open .dropdown-content {
+    display: block; /* Mostrar el menú desplegable al hacer clic */
+  }
+}
