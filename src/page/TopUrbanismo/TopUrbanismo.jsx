@@ -19,6 +19,7 @@ function TopUrbanismo() {
   const [handleGrafico2, setHandleGrafico2] = useState(true);
   const [migradosSeleccionados, setMigradosSeleccionados] = useState(["Todos"]);
   const [ciclosSeleccionados, setCiclosSeleccionados] = useState(["Todos"]);
+  const [mostrarLista, setMostrarLista] = useState(true); // Estado para mostrar/ocultar la lista
 
   const handleTop10Urb = () => {
     setTopUrb([0, 10]);
@@ -91,10 +92,12 @@ function TopUrbanismo() {
             ingresosTotales: parseFloat(curr.plan.cost),
             estado: curr.status_name,
             tipo: curr.client_type_name,
+            clientes: [curr] // Agregar el cliente a la lista
           };
         } else {
           acc[curr.sector_name].cantidadClientes++;
           acc[curr.sector_name].ingresosTotales += parseFloat(curr.plan.cost);
+          acc[curr.sector_name].clientes.push(curr); // Agregar cliente a la lista existente
         }
         return acc;
       }, {});
@@ -213,16 +216,14 @@ function TopUrbanismo() {
               Total de Pérdida:{" "}
               {totalIngresos.toLocaleString("es-ES", {
                 minimumFractionDigits: 2,
-              })}
-              $
+              })}$
             </button>
           ) : (
             <button className="buttonIngreso marginbutton">
               Total de Ingresos:{" "}
               {totalIngresos.toLocaleString("es-ES", {
                 minimumFractionDigits: 2,
-              })}
-              $
+              })}$
             </button>
           )}
 
@@ -233,17 +234,26 @@ function TopUrbanismo() {
             {handleGrafico2 ? "Cerrar Gráficos" : "Abrir Gráficos"}
           </button>
 
+          {/* Botón para mostrar/ocultar lista */}
+          <button
+            onClick={() => setMostrarLista((prev) => !prev)}
+            className="mostrar-ocultar"
+          >
+            {mostrarLista ? "Ocultar Lista" : "Mostrar Lista"}
+          </button>
+
           {handleGrafico2 && <ChartComponent urbanismos={topUrbanismos} />}
           <h3 className="h3"> Top Urbanismos</h3>
 
-          <UrbanismoList urbanismos={topUrbanismos} />
+          {/* Pasa 'mostrarLista' como prop */}
+          <UrbanismoList urbanismos={topUrbanismos} mostrarLista={mostrarLista} />
         </>
       )}
     </div>
   );
 }
 
-function UrbanismoList({ urbanismos }) {
+function UrbanismoList({ urbanismos, mostrarLista }) {
   return (
     <ul>
       {urbanismos.map((urbanismo, index) => (
@@ -265,6 +275,29 @@ function UrbanismoList({ urbanismos }) {
                 <strong>Ingreso total:</strong>{" "}
                 {Math.round(urbanismo.ingresosTotales)}$
               </span>
+            )}
+          </div>
+          <div>
+            {/* Mostrar la lista de clientes si 'mostrarLista' es true */}
+            {mostrarLista && (
+              <ul className="lista-clientes">
+                {urbanismo.clientes?.map((cliente, index) => (
+                  <li key={index}>
+                    <p>
+                      <strong>Nombre:</strong> {cliente.client_name}
+                    </p>
+                    <p>
+                      <strong>Estado:</strong> {cliente.status_name}
+                    </p>
+                    <p>
+                      <strong>Sector:</strong> {cliente.sector_name}
+                    </p>
+                    <p>
+                      <strong>Plan:</strong> {cliente.plan.name} (${cliente.plan.cost})
+                    </p>
+                  </li>
+                ))}
+              </ul>
             )}
           </div>
         </li>
