@@ -113,8 +113,9 @@ function Indicadores() {
                     <strong>Plan:</strong> {cliente.plan.name} (${cliente.plan.cost})
                   </p>
                   <p>
-          <strong>Teléfono:</strong> {cliente.mobile} {/* Aquí se agrega el teléfono */}
-        </p>
+  <strong>Teléfono:</strong> {cliente.client_mobile} {/* Aquí se agrega el teléfono */}
+</p>
+
                 </li>
               ))}
             </ul>
