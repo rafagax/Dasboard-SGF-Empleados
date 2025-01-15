@@ -6,6 +6,7 @@ import LogingForm from "../../Componentes/LogingForm";
 import "./TopUrbanismo.css";
 import ChartComponent from "../../Componentes/ChartComponent";
 import DropdownMenu from "./../../Componentes/DropdownMenu";
+import * as XLSX from "xlsx"; // Importa la librería XLSX
 
 function TopUrbanismo() {
   const { showPasswordState, data, isLoading, error } = useContext(PasswordContext);
@@ -20,13 +21,8 @@ function TopUrbanismo() {
   const [migradosSeleccionados, setMigradosSeleccionados] = useState(["Todos"]);
   const [ciclosSeleccionados, setCiclosSeleccionados] = useState(["Todos"]);
 
-  const handleTop10Urb = () => {
-    setTopUrb([0, 10]);
-  };
-
-  const handleTopUrb = () => {
-    setTopUrb([0, 3500]);
-  };
+  const handleTop10Urb = () => setTopUrb([0, 10]);
+  const handleTopUrb = () => setTopUrb([0, 3500]);
 
   const handleMigradosChange = (event) => {
     const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
@@ -38,9 +34,7 @@ function TopUrbanismo() {
     setEstadosSeleccionados(selectedOptions);
   };
 
-  const toggleGraficos = () => {
-    setHandleGrafico2(!handleGrafico2); 
-  };
+  const toggleGraficos = () => setHandleGrafico2(!handleGrafico2);
 
   const handleEstadoChange2 = (event) => {
     const selectedOptions2 = Array.from(event.target.selectedOptions, (option) => option.value);
@@ -51,6 +45,52 @@ function TopUrbanismo() {
     const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
     setCiclosSeleccionados(selectedOptions);
   };
+
+  const handleDownloadExcel = () => {
+    const workbook = XLSX.utils.book_new();
+  
+    // Generar datos de urbanismos
+    const worksheetData = topUrbanismos.flatMap((urbanismo, index) => {
+      return urbanismo.clientes.map((cliente, clientIndex) => ({
+        // "N° Urbanismo": index + 1,
+        "N° Cliente": clientIndex + 1,
+        Cliente: cliente.client_name,
+        Urbanismo: urbanismo.urbanismo,
+        Estado: cliente.status_name,
+        // Sector: cliente.sector_name,
+        Plan: `${cliente.plan.name} (${cliente.plan.cost}$)`,
+        Teléfono: cliente.client_mobile,
+      }));
+    });
+  
+    // Crear la hoja de trabajo con los datos generados
+    const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+  // Ajustar el ancho de las columnas para que no se vean amontonadas
+  const columnWidths = worksheetData.reduce((acc, row) => {
+    Object.keys(row).forEach((key, idx) => {
+      const cellValue = String(row[key]);
+      const currentWidth = acc[idx] || 0;
+      acc[idx] = Math.max(currentWidth, cellValue.length);
+    });
+    return acc;
+  }, []);
+
+  worksheet['!cols'] = columnWidths.map(width => ({ wpx: width * 6 })); // Multiplica por 10 para ajustar el tamaño
+
+
+    // Agregar la hoja de trabajo al libro
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Clientes por Urbanismo");
+  
+    // Obtener el estado seleccionado
+    const estadoSeleccionado = estadosSeleccionados.join('_'); // Une todos los estados seleccionados con un guion bajo (si es necesario)
+  
+    // Generar el nombre del archivo con el estado seleccionado
+    const nombreArchivo = `listado_de_clientes_${estadoSeleccionado}.xlsx`;
+  
+    // Descargar el archivo Excel
+    XLSX.writeFile(workbook, nombreArchivo);
+  };
+  
 
   useEffect(() => {
     if (!data) return;
@@ -113,11 +153,13 @@ function TopUrbanismo() {
           <DropdownMenu />
           <PageNav />
           <div>
-            <button className="button" type="submit" onClick={handleTop10Urb}>Top 10</button>
-            <button className="button" type="submit" onClick={handleTopUrb}>Top Global</button>
+            <button className="button" onClick={handleTop10Urb}>Top 10</button>
+            <button className="button" onClick={handleTopUrb}>Top Global</button>
           </div>
+          
+        
 
-          <select id="estadoSelect" size="5" multiple value={estadosSeleccionados} onChange={handleEstadoChange} style={{ fontSize: '12px' }}>
+          <select id="estadoSelect" size="5" multiple value={estadosSeleccionados} onChange={handleEstadoChange}>
             <option value="Todos">Todos</option>
             <option value="Activo">Activos</option>
             <option value="Suspendido">Suspendidos</option>
@@ -126,35 +168,36 @@ function TopUrbanismo() {
             <option value="Cancelado">Cancelados</option>
           </select>
 
-          <select id="estadoSelect2" size="5" multiple value={estadosSeleccionadosType} onChange={handleEstadoChange2} style={{ fontSize: '10px' }}>
+          <select id="estadoSelect2" size="5" multiple value={estadosSeleccionadosType} onChange={handleEstadoChange2}>
             <option value="Todos">Tipo de Cliente/Todos</option>
             <option value="PYME">Pyme</option>
             <option value="RESIDENCIAL">Residenciales</option>
             <option value="INTERCAMBIO">Institucionales</option>
           </select>
 
-          <select id="migradosSelect" size="2" multiple value={migradosSeleccionados} onChange={handleMigradosChange} style={{ fontSize: '12px' }}>
+          <select id="migradosSelect" size="2" multiple value={migradosSeleccionados} onChange={handleMigradosChange}>
             <option value="Todos">Todos</option>
             <option value="Migrado">Migrados</option>
             <option value="No migrado">No migrados</option>
           </select>
 
-          <select id="ciclosSelect" size="3" multiple value={ciclosSeleccionados} onChange={handleCiclosChange} style={{ fontSize: '12px' }}>
+          <select id="ciclosSelect" size="3" multiple value={ciclosSeleccionados} onChange={handleCiclosChange}>
             <option value="Todos">Todos</option>
             <option value="15">Ciclo 15</option>
             <option value="25">Ciclo 25</option>
           </select>
 
           <button className="buttonIngreso">Total de clientes: {totalClientesGlobal}</button>
-          {estadosSeleccionados.includes("Cancelado") ? (
-            <button className="buttonIngreso marginbutton">Total de Pérdida: {totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$</button>
-          ) : (
-            <button className="buttonIngreso marginbutton">Total de Ingresos: {totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$</button>
-          )}
+          <button className="buttonIngreso marginbutton">
+            {estadosSeleccionados.includes("Cancelado")
+              ? `Total de Pérdida: ${totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$`
+              : `Total de Ingresos: ${totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$`}
+          </button>
 
           <button className={!handleGrafico2 ? "button" : "buttonCerrar"} onClick={toggleGraficos}>
             {handleGrafico2 ? "Cerrar Gráficos" : "Abrir Gráficos"}
-          </button>
+          </button> 
+          <button className="buttonDescargar" onClick={handleDownloadExcel}>Descargar Excel</button>
 
           {handleGrafico2 && <ChartComponent urbanismos={topUrbanismos} />}
           <h3 className="h3">Top Urbanismos</h3>
