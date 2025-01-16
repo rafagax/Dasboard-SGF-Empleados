@@ -4,10 +4,15 @@ import "./PageNotFound.css";
 
 function PageNotFound() {
   return (
-    <div>
-      <DropdownMenu/>
+    <div className="page-not-found">
+      <DropdownMenu />
       <PageNav />
-      <p> Page Not Found x_X </p>
+      <img
+        src="https://pinguinodigital.com/wp-content/uploads/2020/08/pagina-en-construcci%C3%B3n4.png"
+        alt="Page Under Construction"
+        className="construction-image"
+      />
+      <p>Page Not Found or Page Under Construction</p>
     </div>
   );
 }

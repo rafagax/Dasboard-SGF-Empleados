@@ -1,0 +1,52 @@
+/* PageNotFound.css */
+
+/* Estilos exclusivos para el contenedor */
+.page-not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(to bottom right, #1e3c72, #2a5298);
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Imagen responsiva */
+  .page-not-found .construction-image {
+    max-width: 90%; /* Ajuste al 90% del ancho del contenedor */
+    height: auto; /* Mantener proporciones */
+    margin-bottom: 20px;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Texto estilizado */
+  .page-not-found p {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Responsivo para pantallas más pequeñas */
+  @media (max-width: 768px) {
+    .page-not-found p {
+      font-size: 1.2rem;
+      padding: 8px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .page-not-found p {
+      font-size: 1rem;
+    }
+  }
+  

@@ -13,10 +13,10 @@ function PageNav() {
           <NavLink to="/Indicadores">Lista de Clientes </NavLink>
         </li>
         <li>
-          <NavLink to="/Ventas">Ventas </NavLink>
+          <NavLink to="/*">Ventas </NavLink>
         </li>
         <li>
-          <NavLink to="/Ventascalle2">Vendedores </NavLink>
+          <NavLink to="/*">Vendedores </NavLink>
         </li>
         <li>
           <NavLink to="/Admin">Adm. Ingresos</NavLink>
