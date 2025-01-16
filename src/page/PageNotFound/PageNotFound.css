@@ -17,7 +17,7 @@
   
   /* Imagen responsiva */
   .page-not-found .construction-image {
-    max-width: 90%; /* Ajuste al 90% del ancho del contenedor */
+    max-width: 60%; /* Ajuste al 90% del ancho del contenedor */
     height: auto; /* Mantener proporciones */
     margin-bottom: 20px;
     border: 2px solid #fff;
@@ -38,6 +38,10 @@
   
   /* Responsivo para pantallas más pequeñas */
   @media (max-width: 768px) {
+    .page-not-found .construction-image {
+      max-width: 70%; /* Imagen más grande en pantallas medianas */
+    }
+  
     .page-not-found p {
       font-size: 1.2rem;
       padding: 8px;
@@ -45,6 +49,11 @@
   }
   
   @media (max-width: 480px) {
+    .page-not-found .construction-image {
+      max-width: 100%; /* Imagen más grande en teléfonos */
+      height: 40%;
+    }
+  
     .page-not-found p {
       font-size: 1rem;
     }
