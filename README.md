@@ -1,79 +1,55 @@
+# Dashboard SGF Empleados
 
-loging # 
+**Descripción breve:** Este proyecto es una aplicación web diseñada para visualizar indicadores clave de rendimiento (KPIs) de la empresa. Está orientado a medir y evaluar datos importantes que ayudan en la toma de decisiones estratégicas.
 
- USER:     prueba
-PASSWORD:  12345
+🌐 **[Ver el proyecto en línea](https://dasboard-sgf-empleados.vercel.app/)**
+
+---
+
+## Credenciales de Acceso
+
+Para iniciar sesión en la aplicación, utiliza las siguientes credenciales:
+
+- **Usuario:** prueba  
+- **Contraseña:** 12345
+
+![image](https://github.com/user-attachments/assets/f825a330-deac-4d24-9695-774c20b2a691)
+
+
+---
+
+## Características
+- Visualización de clientes activos.
+- Análisis de ingresos por ciclo de pagos.
+- Estadísticas de clientes suspendidos.
+- Planificación y gestión de pymes y comercios.
+- Visualización de ingresos por ventas.
+- Tablas y gráficos interactivos para la evaluación de datos.
+- Descarga de lista de clientes mediante un archivo de excel
+- Estadísticas avanzadas y mucho más.
+
+---![image](https://github.com/user-attachments/assets/d4ba96b5-e3c8-4499-9d89-9c66e2763f37)
+
+
+## Tecnologías Usadas
+- **React**: Para la construcción de la interfaz de usuario.
+- **CSS3**: Para el diseño y estilos responsivos.
+- **JavaScript**: Para la lógica funcional.
+- **Vercel**: Para el despliegue de la aplicación.
+
+---
+![image](https://github.com/user-attachments/assets/13845cad-b265-4a57-be7a-2508c41d2280)
+![image](https://github.com/user-attachments/assets/77f6fa46-6f0c-4263-8868-9f0cdfd4ebd9)
 
 
 
+## Instalación Local
 
-# Getting Started with Create React App
+Sigue estos pasos para ejecutar el proyecto en tu entorno local:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/tu-usuario/Dashboard-SGF-Empleados.git
+2. npm install
+3. npm start
+4. Luego, abre http://localhost:3000 en tu navegador para ver la aplicación.
