@@ -16,7 +16,7 @@ Para iniciar sesión en la aplicación, utiliza las siguientes credenciales:
 ![image](https://github.com/user-attachments/assets/f825a330-deac-4d24-9695-774c20b2a691)
 
 
----
+----
 
 ## Características
 - Visualización de clientes activos.
