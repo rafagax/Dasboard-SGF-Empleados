@@ -47,6 +47,7 @@ Para iniciar sesión en la aplicación, utiliza las siguientes credenciales:
 
 Sigue estos pasos para ejecutar el proyecto en tu entorno local:
 
+🌐 **[Ver el proyecto en línea](https://dasboard-sgf-empleados.vercel.app/)**
 1. **Clonar el repositorio:**
    ```bash
    git clone https://github.com/tu-usuario/Dashboard-SGF-Empleados.git
