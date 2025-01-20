@@ -50,18 +50,22 @@ function TopUrbanismo() {
     const workbook = XLSX.utils.book_new();
   
     // Generar datos de urbanismos
-    const worksheetData = topUrbanismos.flatMap((urbanismo, index) => {
-      return urbanismo.clientes.map((cliente, clientIndex) => ({
-        // "N° Urbanismo": index + 1,
-        "N° Cliente": clientIndex + 1,
-        Cliente: cliente.client_name,
-        Urbanismo: urbanismo.urbanismo,
-        Estado: cliente.status_name,
-        // Sector: cliente.sector_name,
-        Plan: `${cliente.plan.name} (${cliente.plan.cost}$)`,
-        Teléfono: cliente.client_mobile,
-      }));
-    });
+const worksheetData = topUrbanismos.flatMap((urbanismo, index) => {
+  return urbanismo.clientes.map((cliente, clientIndex) => ({
+    // "N° Urbanismo": index + 1,
+    "N° Cliente": clientIndex + 1,
+    Cliente: cliente.client_name,
+    Urbanismo: urbanismo.urbanismo,
+    Estado: cliente.status_name,
+    // Sector: cliente.sector_name,
+    Plan: `${cliente.plan.name} (${cliente.plan.cost}$)`,
+    costo_plan: Number(cliente.plan.cost),
+    Teléfono: cliente.client_mobile,
+    Ciclo: cliente.cycle, // Campo agregado
+  }));
+});
+
+
   
     // Crear la hoja de trabajo con los datos generados
     const worksheet = XLSX.utils.json_to_sheet(worksheetData);
@@ -252,6 +256,7 @@ function UrbanismoList({ urbanismos }) {
                     <p><strong>Sector:</strong> {cliente.sector_name}</p>
                     <p><strong>Plan:</strong> {cliente.plan.name} (${cliente.plan.cost})</p>
                     <p><strong>Teléfono:</strong> {cliente.client_mobile}</p>
+                    <p><strong>ciclo:</strong>{cliente.cycle}</p>
                   </li>
                 ))}
               </ul>
