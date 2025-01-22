@@ -19,7 +19,7 @@ const largeArraydata =
           "code": "FOR250",
           "profile": "250M/250M"
         },
-        "client_mobile": "04128360568" 
+        "client_mobile": "04128360568"
       },
       {
         "id": 7418,
@@ -70350,7 +70350,8 @@ const largeArraydata =
         },
         "client_mobile": "04127775205"
       }
-    ]
+    
+]
 }
 
 export default largeArraydata;
