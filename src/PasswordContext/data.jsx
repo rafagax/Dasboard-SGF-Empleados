@@ -5,10 +5,61 @@ const largeArraydata =
 [ 
 
     {
+      "id": 7505,
+      "client_name": "ERNESTO ENRIQUE LUCAS",
+      "client_type_name": "RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 25,
+      "migrate": true,
+      "sector_name": "El Macaro",
+      "plan": {
+        "id": 87,
+        "name": "RECURRENTE RESIDENCIAL PLAN 400M",
+        "cost": "30.00",
+        "code": "FOR4M",
+        "profile": "400M/400"
+      },
+      "client_mobile": "04146689119"
+    },
+    {
+      "id": 7504,
+      "client_name": "FRANYERLI STHEPANY SANDOVAL SANDOVAL",
+      "client_type_name": "RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 25,
+      "migrate": true,
+      "sector_name": "Canaima",
+      "plan": {
+        "id": 87,
+        "name": "RECURRENTE RESIDENCIAL PLAN 400M",
+        "cost": "30.00",
+        "code": "FOR4M",
+        "profile": "400M/400"
+      },
+      "client_mobile": "04243093277"
+    },
+    {
+      "id": 7503,
+      "client_name": "RAFAEL ANGEL PEREZ",
+      "client_type_name": "RESIDENCIAL",
+      "status_name": "Por instalar",
+      "cycle": 25,
+      "migrate": true,
+      "sector_name": "Villeguita",
+      "plan": {
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 250M",
+        "cost": "24.00",
+        "code": "FOR250M",
+        "profile": "250Mbps/250Mbps"
+      },
+      "client_mobile": "04267425985"
+    },
+    {
       "id": 7502,
       "client_name": "KIMBERLY MORELBYS FERNANDEZ GRANADILO",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Por instalar",
+      "status_name": "Suspendido",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Prados I",
@@ -25,7 +76,7 @@ const largeArraydata =
       "id": 7501,
       "client_name": "ROSARIO JOSE CARUSO PEÑA",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Por instalar",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -42,7 +93,7 @@ const largeArraydata =
       "id": 7500,
       "client_name": "GERMANY ALEJANDRA OVALLES PALENCIA",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Por instalar",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -59,7 +110,7 @@ const largeArraydata =
       "id": 7499,
       "client_name": "WUILLIAMS RAMON BETANCOURT BUSCARUIDO",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Por instalar",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Casco de Turmero",
@@ -76,7 +127,7 @@ const largeArraydata =
       "id": 7498,
       "client_name": "ADONIS JOSE AVILA BRICEÑO",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Por instalar",
+      "status_name": "Suspendido",
       "cycle": 25,
       "migrate": true,
       "sector_name": "1ro de Mayo Sur",
@@ -93,7 +144,7 @@ const largeArraydata =
       "id": 7497,
       "client_name": "JEAN CARLOS PEREZ BLANCO",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Por instalar",
+      "status_name": "Suspendido",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Vallecito",
@@ -110,7 +161,7 @@ const largeArraydata =
       "id": 7496,
       "client_name": "CARMEN DOLORES CASTILLO BOGADO",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Por instalar",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Valle Verde",
@@ -161,7 +212,7 @@ const largeArraydata =
       "id": 7493,
       "client_name": "EDUARDO JAVIER VARGAS TOVAR",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Por instalar",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Vallecito",
@@ -178,7 +229,7 @@ const largeArraydata =
       "id": 7492,
       "client_name": "REINALDO DAVID LEON VASQUEZ",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Activo",
+      "status_name": "Suspendido",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Valle Verde",
@@ -331,7 +382,7 @@ const largeArraydata =
       "id": 7483,
       "client_name": "RAFAEL ENRIQUE CAZOLA LEON",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Suspendido",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "El Cambur",
@@ -909,7 +960,7 @@ const largeArraydata =
       "id": 7428,
       "client_name": "ELVIS YESMIL ROMERO TARAZONA",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Por instalar",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Prados I",
@@ -1402,7 +1453,7 @@ const largeArraydata =
       "id": 7399,
       "client_name": "MAIKOL JOANY CAICEDO NUNES",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Activo",
+      "status_name": "Suspendido",
       "cycle": 25,
       "migrate": true,
       "sector_name": "La Casona I",
@@ -1674,7 +1725,7 @@ const largeArraydata =
       "id": 7370,
       "client_name": "MANOLO ALEXANDER CORREA HERNANDEZ",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Activo",
+      "status_name": "Suspendido",
       "cycle": 15,
       "migrate": false,
       "sector_name": "Durpa",
@@ -1764,11 +1815,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Prados de Cafetal",
       "plan": {
-        "id": 87,
-        "name": "RECURRENTE RESIDENCIAL PLAN 400M",
-        "cost": "30.00",
-        "code": "FOR4M",
-        "profile": "400M/400"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 250M",
+        "cost": "24.00",
+        "code": "FOR250M",
+        "profile": "250Mbps/250Mbps"
       },
       "client_mobile": "04265306192"
     },
@@ -2099,7 +2150,7 @@ const largeArraydata =
       "id": 7345,
       "client_name": "JOSELINE YINSAUMMYY RIVAS LOBO",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Suspendido",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": true,
       "sector_name": "Valle Fresco",
@@ -2354,7 +2405,7 @@ const largeArraydata =
       "id": 7330,
       "client_name": "JACKSON ANDRES GONZALEZ AVENDAÑO",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Suspendido",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Casco de Turmero",
@@ -3595,7 +3646,7 @@ const largeArraydata =
       "id": 7257,
       "client_name": "MARIA EMILIA MOY CARABALLO",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Suspendido",
+      "status_name": "Activo",
       "cycle": 15,
       "migrate": true,
       "sector_name": "Durpa",
@@ -4314,11 +4365,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "La Marcelota",
       "plan": {
-        "id": 88,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "35.00",
-        "code": "FO-450",
-        "profile": "450Mbps/450Mbps"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 250M",
+        "cost": "24.00",
+        "code": "FOR250M",
+        "profile": "250Mbps/250Mbps"
       },
       "client_mobile": "04243773497"
     },
@@ -4348,11 +4399,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "La Marcelota",
       "plan": {
-        "id": 89,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.00",
-        "code": "FO-600",
-        "profile": "600Mbps/600Mbps"
+        "id": 88,
+        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
+        "cost": "35.00",
+        "code": "FO-450",
+        "profile": "450Mbps/450Mbps"
       },
       "client_mobile": "04243228503"
     },
@@ -8389,7 +8440,7 @@ const largeArraydata =
       "id": 6974,
       "client_name": "FERNANDO RAUL RANGEL DELGADO",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Suspendido",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Canaima",
@@ -8457,7 +8508,7 @@ const largeArraydata =
       "id": 6968,
       "client_name": "ABRIL JOCERLYS MARIA CARRILLO CABRERA",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Suspendido",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Saman Tarazonero II",
@@ -12180,7 +12231,7 @@ const largeArraydata =
       "id": 6745,
       "client_name": "ISBET NARANJO DE MAGO",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Suspendido",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Casco de Turmero",
@@ -13375,11 +13426,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Pantin",
       "plan": {
-        "id": 89,
-        "name": "RECURRENTE RESIDENCIAL PLAN 600M",
-        "cost": "40.00",
-        "code": "FO-600",
-        "profile": "600Mbps/600Mbps"
+        "id": 87,
+        "name": "RECURRENTE RESIDENCIAL PLAN 400M",
+        "cost": "30.00",
+        "code": "FOR4M",
+        "profile": "400M/400"
       },
       "client_mobile": "04243304527"
     },
@@ -16945,11 +16996,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "1ro de Mayo Norte",
       "plan": {
-        "id": 87,
-        "name": "RECURRENTE RESIDENCIAL PLAN 400M",
-        "cost": "30.00",
-        "code": "FOR4M",
-        "profile": "400M/400"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 250M",
+        "cost": "24.00",
+        "code": "FOR250M",
+        "profile": "250Mbps/250Mbps"
       },
       "client_mobile": "04241732885"
     },
@@ -18504,7 +18555,7 @@ const largeArraydata =
       "id": 6356,
       "client_name": "JERSON JOSE ALVARADO COLON",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Suspendido",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Mata Caballo",
@@ -22725,11 +22776,11 @@ const largeArraydata =
       "migrate": false,
       "sector_name": "Casco de Turmero",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "35.00",
-        "code": "FOR450",
-        "profile": "450M/450M"
+        "id": 100,
+        "name": "RECURRENTE RESIDENCIAL PLAN 250M",
+        "cost": "24.00",
+        "code": "FOR250M",
+        "profile": "250Mbps/250Mbps"
       },
       "client_mobile": "04126786366"
     },
@@ -27514,7 +27565,7 @@ const largeArraydata =
       "id": 5817,
       "client_name": "YSABEL CRISTINA CORREA SARMIENTO",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Suspendido",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Pantin",
@@ -27650,7 +27701,7 @@ const largeArraydata =
       "id": 5809,
       "client_name": "SILEIDI COSMELINA FREITES VELASQUEZ",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Suspendido",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Pantin",
@@ -29112,7 +29163,7 @@ const largeArraydata =
       "id": 5723,
       "client_name": "MARYURI DEL VALLE RIVERO FAGUNDEZ",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Suspendido",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Mata Caballo",
@@ -34042,7 +34093,7 @@ const largeArraydata =
       "id": 5428,
       "client_name": "ECCYS TERESA GARCIA REYES",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Suspendido",
+      "status_name": "Activo",
       "cycle": 25,
       "migrate": false,
       "sector_name": "Palma Real",
@@ -50226,7 +50277,7 @@ const largeArraydata =
       "id": 4391,
       "client_name": "DISTRIBUIDORA COD23, C.A.",
       "client_type_name": "PYME",
-      "status_name": "Suspendido",
+      "status_name": "Activo",
       "cycle": 15,
       "migrate": true,
       "sector_name": "Guanarito",
@@ -57706,7 +57757,7 @@ const largeArraydata =
       "id": 3920,
       "client_name": "ERNESTO FRANCISCO LIENDO NIEVES",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Suspendido",
+      "status_name": "Activo",
       "cycle": 15,
       "migrate": true,
       "sector_name": "Saman Tarazonero II",
@@ -62155,6 +62206,23 @@ const largeArraydata =
         "profile": "400M/400M"
       },
       "client_mobile": "04144902991"
+    },
+    {
+      "id": 3637,
+      "client_name": "HENXY TERESA MAGDALENO QUINCHOA",
+      "client_type_name": "RESIDENCIAL",
+      "status_name": "Activo",
+      "cycle": 15,
+      "migrate": true,
+      "sector_name": "Rio Seco",
+      "plan": {
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 400M",
+        "cost": "30.00",
+        "code": "FOR400M",
+        "profile": "400M/400M"
+      },
+      "client_mobile": "04243034691"
     },
     {
       "id": 3637,
@@ -69679,11 +69747,11 @@ const largeArraydata =
       "migrate": true,
       "sector_name": "Pantin",
       "plan": {
-        "id": 3,
-        "name": "RECURRENTE RESIDENCIAL PLAN 450M",
-        "cost": "35.00",
-        "code": "FOR450",
-        "profile": "450M/450M"
+        "id": 21,
+        "name": "RECURRENTE RESIDENCIAL PLAN 400M",
+        "cost": "30.00",
+        "code": "FOR400M",
+        "profile": "400M/400M"
       },
       "client_mobile": "04121781877"
     },
@@ -70303,7 +70371,7 @@ const largeArraydata =
       "id": 3133,
       "client_name": "NISSLEIDY NATHALY BARRIOS GARCES",
       "client_type_name": "RESIDENCIAL",
-      "status_name": "Suspendido",
+      "status_name": "Activo",
       "cycle": 15,
       "migrate": true,
       "sector_name": "Bicentenario",
@@ -71406,5 +71474,4 @@ const largeArraydata =
     }
   ]
 }
-
 export default largeArraydata;
