@@ -55,13 +55,16 @@ const worksheetData = topUrbanismos.flatMap((urbanismo, index) => {
     // "N° Urbanismo": index + 1,
     "N° Cliente": clientIndex + 1,
     Cliente: cliente.client_name,
+    id: cliente.id,
     Urbanismo: urbanismo.urbanismo,
     Estado: cliente.status_name,
-    // Sector: cliente.sector_name,
+     Sector: cliente.sector_name,
     Plan: `${cliente.plan.name} (${cliente.plan.cost}$)`,
     costo_plan: Number(cliente.plan.cost),
     Teléfono: cliente.client_mobile,
     Ciclo: cliente.cycle, // Campo agregado
+    address: cliente.address,
+    client_identification: cliente.client_identification,
   }));
 });
 
@@ -257,6 +260,8 @@ function UrbanismoList({ urbanismos }) {
                     <p><strong>Plan:</strong> {cliente.plan.name} (${cliente.plan.cost})</p>
                     <p><strong>Teléfono:</strong> {cliente.client_mobile}</p>
                     <p><strong>ciclo:</strong>{cliente.cycle}</p>
+                    <p><strong>Direccion:</strong>{cliente.address}</p>
+                    
                   </li>
                 ))}
               </ul>
