@@ -29,6 +29,7 @@ function PasswordProvider({ children }) {
     { email: process.env.REACT_APP_USER11_EMAIL, password: process.env.REACT_APP_USER11_PASSWORD, role: "admin" },
     { email: process.env.REACT_APP_USER12_EMAIL, password: process.env.REACT_APP_USER11_PASSWORD, role: "ventas" },
     { email: process.env.REACT_APP_USER13_EMAIL, password: process.env.REACT_APP_USER11_PASSWORD, role: "admin" },
+    { email: process.env.REACT_APP_USER17_EMAIL, password: process.env.REACT_APP_USER17_PASSWORD, role: "admin" },
   ];
 
   const handleLoginClick = (e) => {
