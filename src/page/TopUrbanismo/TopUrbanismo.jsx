@@ -6,7 +6,141 @@ import LogingForm from "../../Componentes/LogingForm";
 import "./TopUrbanismo.css";
 import ChartComponent from "../../Componentes/ChartComponent";
 import DropdownMenu from "./../../Componentes/DropdownMenu";
-import * as XLSX from "xlsx"; // Importa la librería XLSX
+import * as XLSX from "xlsx";
+
+// Mapeo de sectores a agencias
+const sectorAgenciaMap = {
+  "El Macaro": "AGENCIA MACARO",
+  "Betania": "AGENCIA PAYA",
+  "Vallecito": "AGENCIA PAYA",
+  "Rio Seco": "AGENCIA PAYA",
+  // Agrega más mapeos según sea necesario
+};
+
+// Definir los urbanismos aprobados por sector
+const urbanismosAprobados = {
+  "AGENCIA MACARO": [
+    "Guerito",
+    "Isaac Oliveira",
+    "La Casona I",
+    "La Casona I Edificios",
+    "La Casona II",
+    "La Casona II Edificios",
+    "La Concepcion",
+    "La Concepcion III",
+    "La Julia",
+    "La Magdalena",
+    "Leocolbo",
+    "Los Caobos",
+    "Narayola II",
+    "Palmeras I",
+    "Palmeras II",
+    "Plaza Jardin",
+    "Salto Angel",
+    "Saman de Guere",
+    "Saman Tarazonero I",
+    "Saman Tarazonero II",
+    "Santa Eduviges",
+    "Terrazas de Juan Pablo",
+    "Villas Del Sur",
+    "Antonio Jose de Sucre",
+    "Arturo Luis Berti",
+    "El Paraiso",
+    "Jabillar",
+    "La Esperanza",
+    "La Macarena",
+    "Lascenio Guerrero",
+    "San Sebastian",
+    "Santa Barbara",
+    "Simon Bolivar",
+    "Valle del Rosario",
+    "Villa De San Jose",
+    "Villa Los Tamarindos",
+    "Villas El Carmen",
+  ],
+  "AGENCIA PAYA": [
+    "1ro de Mayo Norte",
+    "1ro de Mayo Sur",
+    "Antigua Hacienda De Paya",
+    "Betania",
+    "Bicentenario",
+    "Brisas de Paya",
+    "Callejon Los Mamones",
+    "Canaima",
+    "Casco de Turmero",
+    "Durpa",
+    "El Bosque",
+    "El Cambur",
+    "El Naranjal",
+    "Ezequiel Zamora",
+    "Guayabita",
+    "La Arboleda",
+    "La Guzman",
+    "La Marcelota",
+    "La Orquidea",
+    "Las Palmas",
+    "Las Rurales",
+    "Los Hornos",
+    "Luz y Vida",
+    "Manirito",
+    "Mata Caballo",
+    "Palma Real",
+    "Pantin",
+    "Paraguatan",
+    "Paya Abajo",
+    "Payita",
+    "Polvorin",
+    "Ppal Paya",
+    "Prados",
+    "Prados I",
+    "Prados II",
+    "Prados III",
+    "Rio Seco",
+    "Sector los Mangos",
+    "Taguapire",
+    "Terrazas de Paya",
+    "Valle Verde",
+    "Vallecito",
+    "Vista Hermosa",
+    "Antigua Hacienda De Paya II",
+  ],
+  "AGENCIA TURMERO": [
+    "Calle Peñalver",
+    "Callejon 17",
+    "Callejon Cañaveral",
+    "Callejon Lim",
+    "Callejon Los Jabillos",
+    "Callejon Rosales",
+    "Ciudad Bendita",
+    "Dios Es Mi Refugio",
+    "El Macaro",
+    "El Nispero",
+    "Guanarito",
+    "Haras de San Pablo",
+    "Huerta Los Pajaros",
+    "La Aduana",
+    "La Floresta",
+    "La Montaña",
+    "La Montañita",
+    "Laguna II",
+    "Laguna Plaza",
+    "Los Mangos",
+    "Los Nisperos",
+    "Marina Caribe",
+    "Prados de Cafetal",
+    "Residencias Candys",
+    "Residencias Mariño",
+    "San Carlos",
+    "San Pablo",
+    "Terrazas de Turmero",
+    "Tibisay Guevara",
+    "Valle Fresco",
+    "Valle lindo",
+    "Valle Paraiso",
+    "Villeguita",
+    "Villa Caribe",
+  ],
+};
 
 function TopUrbanismo() {
   const { showPasswordState, data, isLoading, error } = useContext(PasswordContext);
@@ -20,9 +154,17 @@ function TopUrbanismo() {
   const [handleGrafico2, setHandleGrafico2] = useState(true);
   const [migradosSeleccionados, setMigradosSeleccionados] = useState(["Todos"]);
   const [ciclosSeleccionados, setCiclosSeleccionados] = useState(["Todos"]);
+  const [sectoresSeleccionados, setSectoresSeleccionados] = useState([]);
+  const [urbanismosSeleccionados, setUrbanismosSeleccionados] = useState([]);
 
   const handleTop10Urb = () => setTopUrb([0, 10]);
   const handleTopUrb = () => setTopUrb([0, 3500]);
+
+  const handleSectoresChange = (event) => {
+    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
+    setSectoresSeleccionados(selectedOptions);
+    setUrbanismosSeleccionados([]); // Resetear la selección de urbanismos
+  };
 
   const handleMigradosChange = (event) => {
     const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
@@ -48,59 +190,55 @@ function TopUrbanismo() {
 
   const handleDownloadExcel = () => {
     const workbook = XLSX.utils.book_new();
-  
+
     // Generar datos de urbanismos
-const worksheetData = topUrbanismos.flatMap((urbanismo, index) => {
-  return urbanismo.clientes.map((cliente, clientIndex) => ({
-    // "N° Urbanismo": index + 1,
-    "N° Cliente": clientIndex + 1,
-    Cliente: cliente.client_name,
-    id: cliente.id,
-    Urbanismo: urbanismo.urbanismo,
-    Estado: cliente.status_name,
-     Sector: cliente.sector_name,
-    Plan: `${cliente.plan.name} (${cliente.plan.cost}$)`,
-    costo_plan: Number(cliente.plan.cost),
-    Teléfono: cliente.client_mobile,
-    Ciclo: cliente.cycle, // Campo agregado
-    address: cliente.address,
-    client_identification: cliente.client_identification,
-  }));
-});
+    const worksheetData = topUrbanismos.flatMap((urbanismo, index) => {
+      return urbanismo.clientes.map((cliente, clientIndex) => ({
+        "N° Cliente": clientIndex + 1,
+        Cliente: cliente.client_name,
+        id: cliente.id,
+        Urbanismo: urbanismo.urbanismo,
+        Estado: cliente.status_name,
+        Sector: cliente.sector_name,
+        Plan: `${cliente.plan.name} (${cliente.plan.cost}$)`,
+        costo_plan: Number(cliente.plan.cost),
+        Teléfono: cliente.client_mobile,
+        Ciclo: cliente.cycle,
+        address: cliente.address,
+        client_identification: cliente.client_identification,
+      }));
+    });
 
-
-  
     // Crear la hoja de trabajo con los datos generados
     const worksheet = XLSX.utils.json_to_sheet(worksheetData);
-  // Ajustar el ancho de las columnas para que no se vean amontonadas
-  const columnWidths = worksheetData.reduce((acc, row) => {
-    Object.keys(row).forEach((key, idx) => {
-      const cellValue = String(row[key]);
-      const currentWidth = acc[idx] || 0;
-      acc[idx] = Math.max(currentWidth, cellValue.length);
-    });
-    return acc;
-  }, []);
 
-  worksheet['!cols'] = columnWidths.map(width => ({ wpx: width * 6 })); // Multiplica por 10 para ajustar el tamaño
+    // Ajustar el ancho de las columnas
+    const columnWidths = worksheetData.reduce((acc, row) => {
+      Object.keys(row).forEach((key, idx) => {
+        const cellValue = String(row[key]);
+        const currentWidth = acc[idx] || 0;
+        acc[idx] = Math.max(currentWidth, cellValue.length);
+      });
+      return acc;
+    }, []);
 
+    worksheet["!cols"] = columnWidths.map((width) => ({ wpx: width * 6 }));
 
     // Agregar la hoja de trabajo al libro
     XLSX.utils.book_append_sheet(workbook, worksheet, "Clientes por Urbanismo");
-  
-    // Obtener el estado seleccionado
-    const estadoSeleccionado = estadosSeleccionados.join('_'); // Une todos los estados seleccionados con un guion bajo (si es necesario)
-  
-    // Generar el nombre del archivo con el estado seleccionado
+
+    // Generar el nombre del archivo
+    const estadoSeleccionado = estadosSeleccionados.join("_");
     const nombreArchivo = `listado_de_clientes_${estadoSeleccionado}.xlsx`;
-  
+
     // Descargar el archivo Excel
     XLSX.writeFile(workbook, nombreArchivo);
   };
-  
 
   useEffect(() => {
     if (!data) return;
+
+   
 
     const urbanismosTotales = data.results
       .filter((servicio) => {
@@ -108,8 +246,16 @@ const worksheetData = topUrbanismos.flatMap((urbanismo, index) => {
         const tipoFiltrado = estadosSeleccionadosType.includes("Todos") || estadosSeleccionadosType.includes(servicio.client_type_name);
         const migradoFiltrado = migradosSeleccionados.includes("Todos") || migradosSeleccionados.includes(servicio.migrate ? "Migrado" : "No migrado");
         const cicloFiltrado = ciclosSeleccionados.includes("Todos") || ciclosSeleccionados.includes(servicio.cycle ? servicio.cycle.toString() : "");
+        const sectorFiltrado =
+          sectoresSeleccionados.length === 0 ||
+          (servicio.sector_name && sectoresSeleccionados.includes(sectorAgenciaMap[servicio.sector_name]));
+        const urbanismoFiltrado =
+          urbanismosSeleccionados.length === 0 ||
+          (servicio.sector_name && urbanismosSeleccionados.includes(servicio.sector_name));
 
-        return estadoFiltrado && tipoFiltrado && migradoFiltrado && cicloFiltrado;
+       
+
+        return estadoFiltrado && tipoFiltrado && migradoFiltrado && cicloFiltrado && sectorFiltrado && urbanismoFiltrado;
       })
       .reduce((acc, curr) => {
         if (!acc[curr.sector_name]) {
@@ -118,7 +264,7 @@ const worksheetData = topUrbanismos.flatMap((urbanismo, index) => {
             ingresosTotales: parseFloat(curr.plan.cost),
             estado: curr.status_name,
             tipo: curr.client_type_name,
-            clientes: [curr]
+            clientes: [curr],
           };
         } else {
           acc[curr.sector_name].cantidadClientes++;
@@ -128,10 +274,14 @@ const worksheetData = topUrbanismos.flatMap((urbanismo, index) => {
         return acc;
       }, {});
 
+  
+
     const urbanismosTotalesArray = Object.keys(urbanismosTotales).map((sector) => ({
       urbanismo: sector,
       ...urbanismosTotales[sector],
     }));
+
+   
 
     urbanismosTotalesArray.sort((a, b) => b.ingresosTotales - a.ingresosTotales);
 
@@ -142,7 +292,7 @@ const worksheetData = topUrbanismos.flatMap((urbanismo, index) => {
     setTotalClientesGlobal(totalClientes);
     setTotalIngresos(ingresosTotalesCalculados);
     setTopUrbanismos(topUrbanismosCalculados);
-  }, [data, TopUrb, estadosSeleccionados, estadosSeleccionadosType, migradosSeleccionados, ciclosSeleccionados]);
+  }, [data, TopUrb, estadosSeleccionados, estadosSeleccionadosType, migradosSeleccionados, ciclosSeleccionados, sectoresSeleccionados, urbanismosSeleccionados]);
 
   if (isLoading) return <div>Cargando...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -163,8 +313,6 @@ const worksheetData = topUrbanismos.flatMap((urbanismo, index) => {
             <button className="button" onClick={handleTop10Urb}>Top 10</button>
             <button className="button" onClick={handleTopUrb}>Top Global</button>
           </div>
-          
-        
 
           <select id="estadoSelect" size="5" multiple value={estadosSeleccionados} onChange={handleEstadoChange}>
             <option value="Todos">Todos</option>
@@ -194,6 +342,26 @@ const worksheetData = topUrbanismos.flatMap((urbanismo, index) => {
             <option value="25">Ciclo 25</option>
           </select>
 
+          <select id="urbanismosSelect" size="5" multiple value={urbanismosSeleccionados} onChange={(e) => setUrbanismosSeleccionados(Array.from(e.target.selectedOptions, (option) => option.value))}>
+            <option value="">Todos los urbanismos</option>
+            {sectoresSeleccionados.map((sector) =>
+              urbanismosAprobados[sector]?.map((urbanismo) => (
+                <option key={urbanismo} value={urbanismo}>
+                  {urbanismo}
+                </option>
+              ))
+            )}
+          </select>
+
+          <select id="sectoresSelect" size="5" multiple value={sectoresSeleccionados} onChange={handleSectoresChange}>
+            <option value="">Todas las agencias</option>
+            <option value="AGENCIA MACARO">AGENCIA MACARO</option>
+            <option value="AGENCIA PAYA">AGENCIA PAYA</option>
+            <option value="AGENCIA TURMERO">AGENCIA TURMERO</option>
+          </select>
+
+        
+
           <button className="buttonIngreso">Total de clientes: {totalClientesGlobal}</button>
           <button className="buttonIngreso marginbutton">
             {estadosSeleccionados.includes("Cancelado")
@@ -203,7 +371,7 @@ const worksheetData = topUrbanismos.flatMap((urbanismo, index) => {
 
           <button className={!handleGrafico2 ? "button" : "buttonCerrar"} onClick={toggleGraficos}>
             {handleGrafico2 ? "Cerrar Gráficos" : "Abrir Gráficos"}
-          </button> 
+          </button>
           <button className="buttonDescargar" onClick={handleDownloadExcel}>Descargar Excel</button>
 
           {handleGrafico2 && <ChartComponent urbanismos={topUrbanismos} />}
@@ -233,19 +401,17 @@ function UrbanismoList({ urbanismos }) {
 
           <br />
           <div className="encabezados">
-            <span><strong>Cantidad de Clientes:</strong> {urbanismo.cantidadClientes}</span>
-            <br />
-            {!(
-              urbanismo.estado === "Cancelado" || urbanismo.estado === "Gratis"
-            ) && (
-              <span><strong>Ingreso total:</strong> {Math.round(urbanismo.ingresosTotales)}$</span>
-            )}
-          </div>
+  <span><strong>Cantidad de Clientes:</strong> {urbanismo.cantidadClientes}</span>
+  <br />
+  {!(
+    urbanismo.estado === "Cancelado" || urbanismo.estado === "Gratis"
+  ) && (
+    <span><strong>Ingreso total:</strong> {/* {Math.round(urbanismo.ingresosTotales)} */}$</span>
+  )}
+</div>
 
-          <button
-            onClick={() => toggleMostrarLista(index)}
-            className="mostrar-ocultar"
-          >
+
+          <button onClick={() => toggleMostrarLista(index)} className="mostrar-ocultar">
             {mostrarLista[index] ? "Ocultar Lista" : "Mostrar Lista"}
           </button>
 
@@ -259,9 +425,8 @@ function UrbanismoList({ urbanismos }) {
                     <p><strong>Sector:</strong> {cliente.sector_name}</p>
                     <p><strong>Plan:</strong> {cliente.plan.name} (${cliente.plan.cost})</p>
                     <p><strong>Teléfono:</strong> {cliente.client_mobile}</p>
-                    <p><strong>ciclo:</strong>{cliente.cycle}</p>
-                    <p><strong>Direccion:</strong>{cliente.address}</p>
-                    
+                    <p><strong>Ciclo:</strong> {cliente.cycle}</p>
+                    <p><strong>Dirección:</strong> {cliente.address}</p>
                   </li>
                 ))}
               </ul>
