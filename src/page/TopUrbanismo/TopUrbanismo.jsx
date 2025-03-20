@@ -10,137 +10,165 @@ import * as XLSX from "xlsx";
 
 // Mapeo de sectores a agencias
 const sectorAgenciaMap = {
-  "El Macaro": "AGENCIA MACARO",
+  "Guerito": "AGENCIA MACARO",
+  "Isaac Oliveira": "AGENCIA MACARO",
+  "La Casona I": "AGENCIA MACARO",
+  "La Casona I Edificios": "AGENCIA MACARO",
+  "La Casona II": "AGENCIA MACARO",
+  "La Casona II Edificios": "AGENCIA MACARO",
+  "La Concepcion": "AGENCIA MACARO",
+  "La Concepcion III": "AGENCIA MACARO",
+  "La Julia": "AGENCIA MACARO",
+  "La Magdalena": "AGENCIA MACARO",
+  "Leocolbo": "AGENCIA MACARO",
+  "Los Caobos": "AGENCIA MACARO",
+  "Narayola II": "AGENCIA MACARO",
+  "Palmeras I": "AGENCIA MACARO",
+  "Palmeras II": "AGENCIA MACARO",
+  "Plaza Jardin": "AGENCIA MACARO",
+  "Salto Angel": "AGENCIA MACARO",
+  "Saman de Guere": "AGENCIA MACARO",
+  "Saman Tarazonero I": "AGENCIA MACARO",
+  "Saman Tarazonero II": "AGENCIA MACARO",
+  "Santa Eduviges": "AGENCIA MACARO",
+  "Terrazas de Juan Pablo": "AGENCIA MACARO",
+  "Villas Del Sur": "AGENCIA MACARO",
+  "Antonio Jose de Sucre": "AGENCIA MACARO",
+  "Arturo Luis Berti": "AGENCIA MACARO",
+  "El Paraiso": "AGENCIA MACARO",
+  "Jabillar": "AGENCIA MACARO",
+  "La Esperanza": "AGENCIA MACARO",
+  "La Macarena": "AGENCIA MACARO",
+  "Lascenio Guerrero": "AGENCIA MACARO",
+  "San Sebastian": "AGENCIA MACARO",
+  "Santa Barbara": "AGENCIA MACARO",
+  "Simon Bolivar": "AGENCIA MACARO",
+  "Valle del Rosario": "AGENCIA MACARO",
+  "Villa De San Jose": "AGENCIA MACARO",
+  "Villa Los Tamarindos": "AGENCIA MACARO",
+  "Villas El Carmen": "AGENCIA MACARO",
+  
+  "1ro de Mayo Norte": "AGENCIA PAYA",
+  "1ro de Mayo Sur": "AGENCIA PAYA",
+  "Antigua Hacienda De Paya": "AGENCIA PAYA",
   "Betania": "AGENCIA PAYA",
-  "Vallecito": "AGENCIA PAYA",
+  "Bicentenario": "AGENCIA PAYA",
+  "Brisas de Paya": "AGENCIA PAYA",
+  "Callejon Los Mamones": "AGENCIA PAYA",
+  "Canaima": "AGENCIA PAYA",
+  "Durpa": "AGENCIA PAYA",
+  "El Bosque": "AGENCIA PAYA",
+  "El Cambur": "AGENCIA PAYA",
+  "El Naranjal": "AGENCIA PAYA",
+  "Ezequiel Zamora": "AGENCIA PAYA",
+  "Guayabita": "AGENCIA PAYA",
+  "La Arboleda": "AGENCIA PAYA",
+  "La Guzman": "AGENCIA PAYA",
+  "La Marcelota": "AGENCIA PAYA",
+  "La Orquidea": "AGENCIA PAYA",
+  "Las Palmas": "AGENCIA PAYA",
+  "Las Rurales": "AGENCIA PAYA",
+  "Los Hornos": "AGENCIA PAYA",
+  "Luz y Vida": "AGENCIA PAYA",
+  "Manirito": "AGENCIA PAYA",
+  "Mata Caballo": "AGENCIA PAYA",
+  "Palma Real": "AGENCIA PAYA",
+  "Pantin": "AGENCIA PAYA",
+  "Paraguatan": "AGENCIA PAYA",
+  "Paya Abajo": "AGENCIA PAYA",
+  "Payita": "AGENCIA PAYA",
+  "Polvorin": "AGENCIA PAYA",
+  "Ppal Paya": "AGENCIA PAYA",
+  "Prados": "AGENCIA PAYA",
+  "Prados I": "AGENCIA PAYA",
+  "Prados II": "AGENCIA PAYA",
+  "Prados III": "AGENCIA PAYA",
   "Rio Seco": "AGENCIA PAYA",
-  // Agrega más mapeos según sea necesario
+  "Sector los Mangos": "AGENCIA PAYA",
+  "Taguapire": "AGENCIA PAYA",
+  "Terrazas de Paya": "AGENCIA PAYA",
+  "Valle Verde": "AGENCIA PAYA",
+  "Vallecito": "AGENCIA PAYA",
+  "Vista Hermosa": "AGENCIA PAYA",
+  "Antigua Hacienda De Paya II": "AGENCIA PAYA",
+  
+  "Calle Peñalver": "AGENCIA TURMERO",
+  "Callejon 17": "AGENCIA TURMERO",
+  "Callejon Cañaveral": "AGENCIA TURMERO",
+  "Callejon Lim": "AGENCIA TURMERO",
+  "Callejon Los Jabillos": "AGENCIA TURMERO",
+  "Callejon Rosales": "AGENCIA TURMERO",
+  "Ciudad Bendita": "AGENCIA TURMERO",
+  "Dios Es Mi Refugio": "AGENCIA TURMERO",
+  "El Macaro": "AGENCIA TURMERO",
+  "El Nispero": "AGENCIA TURMERO",
+  "Guanarito": "AGENCIA TURMERO",
+  "Haras de San Pablo": "AGENCIA TURMERO",
+  "Huerta Los Pajaros": "AGENCIA TURMERO",
+  "La Aduana": "AGENCIA TURMERO",
+  "La Floresta": "AGENCIA TURMERO",
+  "La Montaña": "AGENCIA TURMERO",
+  "La Montañita": "AGENCIA TURMERO",
+  "Laguna II": "AGENCIA TURMERO",
+  "Laguna Plaza": "AGENCIA TURMERO",
+  "Los Mangos": "AGENCIA TURMERO",
+  "Los Nisperos": "AGENCIA TURMERO",
+  "Marina Caribe": "AGENCIA TURMERO",
+  "Prados de Cafetal": "AGENCIA TURMERO",
+  "Residencias Candys": "AGENCIA TURMERO",
+  "Residencias Mariño": "AGENCIA TURMERO",
+  "San Carlos": "AGENCIA TURMERO",
+  "San Pablo": "AGENCIA TURMERO",
+  "Terrazas de Turmero": "AGENCIA TURMERO",
+  "Tibisay Guevara": "AGENCIA TURMERO",
+  "Valle Fresco": "AGENCIA TURMERO",
+  "Valle lindo": "AGENCIA TURMERO",
+  "Valle Paraiso": "AGENCIA TURMERO",
+  "Villeguita": "AGENCIA TURMERO",
+  "Villa Caribe": "AGENCIA TURMERO",
+  "Casco de Turmero": "AGENCIA TURMERO",
+
 };
 
-// Definir los urbanismos aprobados por sector
+
 const urbanismosAprobados = {
   "AGENCIA MACARO": [
-    "Guerito",
-    "Isaac Oliveira",
-    "La Casona I",
-    "La Casona I Edificios",
-    "La Casona II",
-    "La Casona II Edificios",
-    "La Concepcion",
-    "La Concepcion III",
-    "La Julia",
-    "La Magdalena",
-    "Leocolbo",
-    "Los Caobos",
-    "Narayola II",
-    "Palmeras I",
-    "Palmeras II",
-    "Plaza Jardin",
-    "Salto Angel",
-    "Saman de Guere",
-    "Saman Tarazonero I",
-    "Saman Tarazonero II",
-    "Santa Eduviges",
-    "Terrazas de Juan Pablo",
-    "Villas Del Sur",
-    "Antonio Jose de Sucre",
-    "Arturo Luis Berti",
-    "El Paraiso",
-    "Jabillar",
-    "La Esperanza",
-    "La Macarena",
-    "Lascenio Guerrero",
-    "San Sebastian",
-    "Santa Barbara",
-    "Simon Bolivar",
-    "Valle del Rosario",
-    "Villa De San Jose",
-    "Villa Los Tamarindos",
-    "Villas El Carmen",
+    "Guerito", "Isaac Oliveira", "La Casona I", "La Casona I Edificios",
+    "La Casona II", "La Casona II Edificios", "La Concepcion", "La Concepcion III",
+    "La Julia", "La Magdalena", "Leocolbo", "Los Caobos", "Narayola II",
+    "Palmeras I", "Palmeras II", "Plaza Jardin", "Salto Angel", "Saman de Guere",
+    "Saman Tarazonero I", "Saman Tarazonero II", "Santa Eduviges",
+    "Terrazas de Juan Pablo", "Villas Del Sur", "Antonio Jose de Sucre",
+    "Arturo Luis Berti", "El Paraiso", "Jabillar", "La Esperanza",
+    "La Macarena", "Lascenio Guerrero", "San Sebastian", "Santa Barbara",
+    "Simon Bolivar", "Valle del Rosario", "Villa De San Jose",
+    "Villa Los Tamarindos", "Villas El Carmen"
   ],
   "AGENCIA PAYA": [
-    "1ro de Mayo Norte",
-    "1ro de Mayo Sur",
-    "Antigua Hacienda De Paya",
-    "Betania",
-    "Bicentenario",
-    "Brisas de Paya",
-    "Callejon Los Mamones",
-    "Canaima",
-    "Casco de Turmero",
-    "Durpa",
-    "El Bosque",
-    "El Cambur",
-    "El Naranjal",
-    "Ezequiel Zamora",
-    "Guayabita",
-    "La Arboleda",
-    "La Guzman",
-    "La Marcelota",
-    "La Orquidea",
-    "Las Palmas",
-    "Las Rurales",
-    "Los Hornos",
-    "Luz y Vida",
-    "Manirito",
-    "Mata Caballo",
-    "Palma Real",
-    "Pantin",
-    "Paraguatan",
-    "Paya Abajo",
-    "Payita",
-    "Polvorin",
-    "Ppal Paya",
-    "Prados",
-    "Prados I",
-    "Prados II",
-    "Prados III",
-    "Rio Seco",
-    "Sector los Mangos",
-    "Taguapire",
-    "Terrazas de Paya",
-    "Valle Verde",
-    "Vallecito",
-    "Vista Hermosa",
-    "Antigua Hacienda De Paya II",
+    "1ro de Mayo Norte", "1ro de Mayo Sur", "Antigua Hacienda De Paya", "Betania",
+    "Bicentenario", "Brisas de Paya", "Callejon Los Mamones", "Canaima",
+    "Casco de Turmero", "Durpa", "El Bosque", "El Cambur", "El Naranjal",
+    "Ezequiel Zamora", "Guayabita", "La Arboleda", "La Guzman", "La Marcelota",
+    "La Orquidea", "Las Palmas", "Las Rurales", "Los Hornos", "Luz y Vida",
+    "Manirito", "Mata Caballo", "Palma Real", "Pantin", "Paraguatan",
+    "Paya Abajo", "Payita", "Polvorin", "Ppal Paya", "Prados", "Prados I",
+    "Prados II", "Prados III", "Rio Seco", "Sector los Mangos", "Taguapire",
+    "Terrazas de Paya", "Valle Verde", "Vallecito", "Vista Hermosa",
+    "Antigua Hacienda De Paya II"
   ],
   "AGENCIA TURMERO": [
-    "Calle Peñalver",
-    "Callejon 17",
-    "Callejon Cañaveral",
-    "Callejon Lim",
-    "Callejon Los Jabillos",
-    "Callejon Rosales",
-    "Ciudad Bendita",
-    "Dios Es Mi Refugio",
-    "El Macaro",
-    "El Nispero",
-    "Guanarito",
-    "Haras de San Pablo",
-    "Huerta Los Pajaros",
-    "La Aduana",
-    "La Floresta",
-    "La Montaña",
-    "La Montañita",
-    "Laguna II",
-    "Laguna Plaza",
-    "Los Mangos",
-    "Los Nisperos",
-    "Marina Caribe",
-    "Prados de Cafetal",
-    "Residencias Candys",
-    "Residencias Mariño",
-    "San Carlos",
-    "San Pablo",
-    "Terrazas de Turmero",
-    "Tibisay Guevara",
-    "Valle Fresco",
-    "Valle lindo",
-    "Valle Paraiso",
-    "Villeguita",
-    "Villa Caribe",
-  ],
+    "Calle Peñalver", "Callejon 17", "Callejon Cañaveral", "Callejon Lim",
+    "Callejon Los Jabillos", "Callejon Rosales", "Ciudad Bendita",
+    "Dios Es Mi Refugio", "El Macaro", "El Nispero", "Guanarito",
+    "Haras de San Pablo", "Huerta Los Pajaros", "La Aduana", "La Floresta",
+    "La Montaña", "La Montañita", "Laguna II", "Laguna Plaza", "Los Mangos",
+    "Los Nisperos", "Marina Caribe", "Prados de Cafetal", "Residencias Candys",
+    "Residencias Mariño", "San Carlos", "San Pablo", "Terrazas de Turmero",
+    "Tibisay Guevara", "Valle Fresco", "Valle lindo", "Valle Paraiso",
+    "Villeguita", "Villa Caribe", "Casco de Turmero"
+  ]
 };
+
 
 function TopUrbanismo() {
   const { showPasswordState, data, isLoading, error } = useContext(PasswordContext);
@@ -247,11 +275,14 @@ function TopUrbanismo() {
         const migradoFiltrado = migradosSeleccionados.includes("Todos") || migradosSeleccionados.includes(servicio.migrate ? "Migrado" : "No migrado");
         const cicloFiltrado = ciclosSeleccionados.includes("Todos") || ciclosSeleccionados.includes(servicio.cycle ? servicio.cycle.toString() : "");
         const sectorFiltrado =
-          sectoresSeleccionados.length === 0 ||
-          (servicio.sector_name && sectoresSeleccionados.includes(sectorAgenciaMap[servicio.sector_name]));
-        const urbanismoFiltrado =
-          urbanismosSeleccionados.length === 0 ||
-          (servicio.sector_name && urbanismosSeleccionados.includes(servicio.sector_name));
+  sectoresSeleccionados.length === 0 ||
+  sectoresSeleccionados.includes("Todos") || // Se añade la verificación de "Todos"
+  (servicio.sector_name && sectoresSeleccionados.includes(sectorAgenciaMap[servicio.sector_name]));
+
+const urbanismoFiltrado =
+  urbanismosSeleccionados.length === 0 ||
+  urbanismosSeleccionados.includes("Todos") || // Se añade la verificación de "Todos"
+  (servicio.sector_name && urbanismosSeleccionados.includes(servicio.sector_name));
 
        
 
@@ -296,7 +327,7 @@ function TopUrbanismo() {
 
   if (isLoading) return <div>Cargando...</div>;
   if (error) return <div>Error: {error.message}</div>;
-
+  
   return (
     <div>
       <LogoTitulo />
@@ -342,8 +373,15 @@ function TopUrbanismo() {
             <option value="25">Ciclo 25</option>
           </select>
 
+          <select id="sectoresSelect" size="5" multiple value={sectoresSeleccionados} onChange={handleSectoresChange}>
+            <option value="Todos">Todas las agencias</option>
+            <option value="AGENCIA MACARO">AGENCIA MACARO</option>
+            <option value="AGENCIA PAYA">AGENCIA PAYA</option>
+            <option value="AGENCIA TURMERO">AGENCIA TURMERO</option>
+          </select>
+
           <select id="urbanismosSelect" size="5" multiple value={urbanismosSeleccionados} onChange={(e) => setUrbanismosSeleccionados(Array.from(e.target.selectedOptions, (option) => option.value))}>
-            <option value="">Todos los urbanismos</option>
+            <option value="Todos">Todos los urbanismos</option>
             {sectoresSeleccionados.map((sector) =>
               urbanismosAprobados[sector]?.map((urbanismo) => (
                 <option key={urbanismo} value={urbanismo}>
@@ -353,12 +391,7 @@ function TopUrbanismo() {
             )}
           </select>
 
-          <select id="sectoresSelect" size="5" multiple value={sectoresSeleccionados} onChange={handleSectoresChange}>
-            <option value="">Todas las agencias</option>
-            <option value="AGENCIA MACARO">AGENCIA MACARO</option>
-            <option value="AGENCIA PAYA">AGENCIA PAYA</option>
-            <option value="AGENCIA TURMERO">AGENCIA TURMERO</option>
-          </select>
+         
 
         
 

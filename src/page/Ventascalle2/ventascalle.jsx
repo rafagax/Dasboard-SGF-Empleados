@@ -246,11 +246,11 @@ function UrbanismoList({ urbanismos }) {
             </span>
             <br />
             
-            <span>
+            {/* <span>
               <strong>Ingreso Instalacion:</strong>{" "}
               {isNaN(urbanismo.costodeinstalacionTotales) ? 'No disponible' : Math.round(urbanismo.costodeinstalacionTotales)}$
             
-            </span>
+            </span> */}
              
           </div>
           <br />
