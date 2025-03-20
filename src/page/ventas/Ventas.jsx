@@ -428,7 +428,7 @@ function Ventas() {
 
   const { showPasswordState, data, isLoading, error } = useContext(PasswordContext);
 
-  const [TopUrb, setTopUrb] = useState([0, 10]);
+  const [TopUrb, setTopUrb] = useState([0, 5000]);
   const [estadosSeleccionados, setEstadosSeleccionados] = useState(["Por instalar"]);
   const [estadosSeleccionadosType, setEstadosSeleccionadosType] = useState(["Todos"]);
   const [totalIngresos, setTotalIngresos] = useState(0);
