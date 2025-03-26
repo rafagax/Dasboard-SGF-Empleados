@@ -439,7 +439,7 @@ function UrbanismoList({ urbanismos }) {
   {!(
     urbanismo.estado === "Cancelado" || urbanismo.estado === "Gratis"
   ) && (
-    <span><strong>Ingreso total:</strong> {/* {Math.round(urbanismo.ingresosTotales)} */}$</span>
+    <span><strong>Ingreso total:</strong> { Math.round(urbanismo.ingresosTotales)}$</span>
   )}
 </div>
 
