@@ -269,7 +269,9 @@ function TopUrbanismo() {
    
 
     const urbanismosTotales = data.results
-      .filter((servicio) => {
+    .filter((servicio) => !servicio.client_name.includes("PRUEBA")) // Filtra clientes que no incluyan "PRUEBA"
+    .filter((servicio) => {
+    
         const estadoFiltrado = estadosSeleccionados.includes("Todos") || estadosSeleccionados.includes(servicio.status_name);
         const tipoFiltrado = estadosSeleccionadosType.includes("Todos") || estadosSeleccionadosType.includes(servicio.client_type_name);
         const migradoFiltrado = migradosSeleccionados.includes("Todos") || migradosSeleccionados.includes(servicio.migrate ? "Migrado" : "No migrado");
