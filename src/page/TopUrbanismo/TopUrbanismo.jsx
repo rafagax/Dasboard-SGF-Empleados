@@ -220,22 +220,50 @@ function TopUrbanismo() {
     const workbook = XLSX.utils.book_new();
 
     // Generar datos de urbanismos
-    const worksheetData = topUrbanismos.flatMap((urbanismo, index) => {
-      return urbanismo.clientes.map((cliente, clientIndex) => ({
-        "N° Cliente": clientIndex + 1,
-        Cliente: cliente.client_name,
-        id: cliente.id,
-        Urbanismo: urbanismo.urbanismo,
-        Estado: cliente.status_name,
-        Sector: cliente.sector_name,
-        Plan: `${cliente.plan.name} (${cliente.plan.cost}$)`,
-        costo_plan: Number(cliente.plan.cost),
-        Teléfono: cliente.client_mobile,
-        Ciclo: cliente.cycle,
-        address: cliente.address,
-        client_identification: cliente.client_identification,
-      }));
-    });
+   function calcularDiasHabiles(fechaInicio, fechaFin) {
+  let count = 0;
+  let current = new Date(fechaInicio);
+
+  while (current <= fechaFin) {
+    const day = current.getDay();
+    if (day !== 0 && day !== 6) {
+      count++;
+    }
+    current.setDate(current.getDate() + 1);
+  }
+
+  return count;
+}
+
+const worksheetData = topUrbanismos.flatMap((urbanismo) => {
+  return urbanismo.clientes.map((cliente, clientIndex) => {
+    const service = cliente.service_detail || {};
+    const fechaCreacion = service.created_at ? new Date(service.created_at) : null;
+    const hoy = new Date();
+    const diasHabiles = fechaCreacion ? calcularDiasHabiles(fechaCreacion, hoy) : "";
+
+    return {
+      "N° Cliente": clientIndex + 1,
+      id: cliente.id,
+      Cliente: cliente.client_name,
+      Urbanismo: urbanismo.urbanismo,
+      Dirección: cliente.address,
+      Teléfono: cliente.client_mobile,
+      Tipo_Cliente: cliente.client_type_name,
+      // IP: service.ip || "",
+      MAC: service.mac || "",
+      // Serial: service.serial || "",
+      // Cola: service.queue || "",
+      // Interfaz: service.interface || "",
+      // Fecha_Creación: service.created_at || "",
+      Fecha_Creación: service.created_at ? service.created_at.slice(0, 10) : "",
+
+      "Días": diasHabiles,
+      // Creado_Por: service.created_by_name || "",
+    };
+  });
+});
+
 
     // Crear la hoja de trabajo con los datos generados
     const worksheet = XLSX.utils.json_to_sheet(worksheetData);
