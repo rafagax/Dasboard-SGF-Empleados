@@ -247,19 +247,19 @@ function TopUrbanismo() {
     const diasHabiles = created_at ? calcularDiasHabiles(created_at, hoy) : "";
 
     return {
-      "N° Cliente": clientIndex + 1,
-      id: cliente.id,
-       "Días Hábiles-": diasHabiles,
-      Cliente: cliente.client_name,
-      Urbanismo: urbanismo.urbanismo,
-      Dirección: cliente.address,
-      Teléfono: cliente.client_mobile,
-      nap_box_name: service.nap_box_name || "",
-      IP: service.ip || "",
-      MAC: service.mac || "",
-      "Fecha_Creación": created_at_raw.slice(0, 10),
-      "Días Hábiles": diasHabiles,
-      Tipo_Cliente: cliente.client_type_name,
+  "N° Cliente": clientIndex + 1,
+        id: cliente.id,
+        "Días Hábiles-": diasHabiles, // Si esta columna extra es necesaria
+        Cliente: cliente.client_name,
+        Urbanismo: urbanismo.urbanismo,
+        Dirección: cliente.address,
+        Teléfono: cliente.client_mobile,
+      "Caja NAP": cliente.nap_box_name || "",
+        IP: service.ip || "",
+        MAC: service.mac || "",
+        "Fecha_Creación": created_at_raw.slice(0, 10),
+        "Días Hábiles": diasHabiles,
+        Tipo_Cliente: cliente.client_type_name,
       
     };
   });
