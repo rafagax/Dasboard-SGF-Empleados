@@ -249,11 +249,12 @@ function TopUrbanismo() {
     return {
   "N° Cliente": clientIndex + 1,
         id: cliente.id,
-        "Días Hábiles-": diasHabiles, // Si esta columna extra es necesaria
+      
         Cliente: cliente.client_name,
-        Urbanismo: urbanismo.urbanismo,
-        Dirección: cliente.address,
         Teléfono: cliente.client_mobile,
+        Dirección: cliente.address,
+        Urbanismo: urbanismo.urbanismo,
+         "Cedula": cliente.client_identification,
       "Caja NAP": cliente.nap_box_name || "",
         IP: service.ip || "",
         MAC: service.mac || "",
