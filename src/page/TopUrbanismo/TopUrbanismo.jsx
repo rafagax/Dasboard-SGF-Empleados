@@ -217,79 +217,82 @@ function TopUrbanismo() {
   };
 
   const handleDownloadExcel = () => {
-    const workbook = XLSX.utils.book_new();
+  const workbook = XLSX.utils.book_new();
 
-    // Generar datos de urbanismos
-   function calcularDiasHabiles(fechaInicio, fechaFin) {
-  let count = 0;
-  let current = new Date(fechaInicio);
+  // Función para calcular días hábiles entre dos fechas
+  function calcularDiasHabiles(fechaInicio, fechaFin) {
+    let count = 0;
+    let current = new Date(fechaInicio);
 
-  while (current <= fechaFin) {
-    const day = current.getDay();
-    if (day !== 0 && day !== 6) {
-      count++;
+    while (current <= fechaFin) {
+      const day = current.getDay();
+      if (day !== 0 && day !== 6) {
+        count++;
+      }
+      current.setDate(current.getDate() + 1);
     }
-    current.setDate(current.getDate() + 1);
+
+    return count;
   }
 
-  return count;
-}
+  const hoy = new Date();
 
-const worksheetData = topUrbanismos.flatMap((urbanismo) => {
+
+
+  const worksheetData = topUrbanismos.flatMap((urbanismo) => {
   return urbanismo.clientes.map((cliente, clientIndex) => {
     const service = cliente.service_detail || {};
-    const fechaCreacion = service.created_at ? new Date(service.created_at) : null;
-    const hoy = new Date();
-    const diasHabiles = fechaCreacion ? calcularDiasHabiles(fechaCreacion, hoy) : "";
+    const created_at_raw = cliente.created_at || "";
+    const created_at = created_at_raw ? new Date(created_at_raw) : null;
+    const diasHabiles = created_at ? calcularDiasHabiles(created_at, hoy) : "";
 
     return {
       "N° Cliente": clientIndex + 1,
       id: cliente.id,
+       "Días Hábiles-": diasHabiles,
       Cliente: cliente.client_name,
       Urbanismo: urbanismo.urbanismo,
       Dirección: cliente.address,
       Teléfono: cliente.client_mobile,
-      Tipo_Cliente: cliente.client_type_name,
-      // IP: service.ip || "",
+      nap_box_name: service.nap_box_name || "",
+      IP: service.ip || "",
       MAC: service.mac || "",
-      // Serial: service.serial || "",
-      // Cola: service.queue || "",
-      // Interfaz: service.interface || "",
-      // Fecha_Creación: service.created_at || "",
-      Fecha_Creación: service.created_at ? service.created_at.slice(0, 10) : "",
-
-      "Días": diasHabiles,
-      // Creado_Por: service.created_by_name || "",
+      "Fecha_Creación": created_at_raw.slice(0, 10),
+      "Días Hábiles": diasHabiles,
+      Tipo_Cliente: cliente.client_type_name,
+      
     };
   });
 });
 
+// ✅ Ordenar por días hábiles de mayor a menor
+worksheetData.sort((a, b) => b["Días Hábiles"] - a["Días Hábiles"]);
 
-    // Crear la hoja de trabajo con los datos generados
-    const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+  // Crear la hoja de trabajo con los datos generados
+  const worksheet = XLSX.utils.json_to_sheet(worksheetData);
 
-    // Ajustar el ancho de las columnas
-    const columnWidths = worksheetData.reduce((acc, row) => {
-      Object.keys(row).forEach((key, idx) => {
-        const cellValue = String(row[key]);
-        const currentWidth = acc[idx] || 0;
-        acc[idx] = Math.max(currentWidth, cellValue.length);
-      });
-      return acc;
-    }, []);
+  // Ajustar el ancho de las columnas
+  const columnWidths = worksheetData.reduce((acc, row) => {
+    Object.keys(row).forEach((key, idx) => {
+      const cellValue = String(row[key]);
+      const currentWidth = acc[idx] || 0;
+      acc[idx] = Math.max(currentWidth, cellValue.length);
+    });
+    return acc;
+  }, []);
 
-    worksheet["!cols"] = columnWidths.map((width) => ({ wpx: width * 6 }));
+  worksheet["!cols"] = columnWidths.map((width) => ({ wpx: width * 6 }));
 
-    // Agregar la hoja de trabajo al libro
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Clientes por Urbanismo");
+  // Agregar la hoja al libro
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Clientes por Urbanismo");
 
-    // Generar el nombre del archivo
-    const estadoSeleccionado = estadosSeleccionados.join("_");
-    const nombreArchivo = `listado_de_clientes_${estadoSeleccionado}.xlsx`;
+  // Nombre del archivo
+  const estadoSeleccionado = estadosSeleccionados.join("_");
+  const nombreArchivo = `listado_de_clientes_${estadoSeleccionado}.xlsx`;
 
-    // Descargar el archivo Excel
-    XLSX.writeFile(workbook, nombreArchivo);
-  };
+  // Descargar el archivo
+  XLSX.writeFile(workbook, nombreArchivo);
+};
 
   useEffect(() => {
     if (!data) return;
