@@ -250,7 +250,8 @@ function TopUrbanismo() {
   "N° Cliente": clientIndex + 1,
         id: cliente.id,
       
-        Cliente: cliente.client_name,
+        
+        Cliente: cliente.client_name, 
         Teléfono: cliente.client_mobile,
         Dirección: cliente.address,
         Urbanismo: urbanismo.urbanismo,
