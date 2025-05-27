@@ -595,10 +595,10 @@ const urbanismoFiltrado =
         <>
           <DropdownMenu />
           <PageNav />
-          <div>
+          {/* <div>
             <button className="button" onClick={handleTop10Urb}>Top 10</button>
             <button className="button" onClick={handleTopUrb}>Top Global</button>
-          </div>
+          </div> */}
 
           <select id="estadoSelect" size="5" multiple value={estadosSeleccionados} onChange={handleEstadoChange}>
             {/* <option value="Todos">Todos</option>
