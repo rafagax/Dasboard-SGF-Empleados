@@ -25,8 +25,8 @@ function DropdownMenu() {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/*" className="dropdown-link">
-              Indicadores de Ventas Globales
+            <NavLink to="/Ventas" className="dropdown-link">
+              operaciones
             </NavLink>
           </li>
           <li>
