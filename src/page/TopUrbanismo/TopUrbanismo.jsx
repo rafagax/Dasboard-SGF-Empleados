@@ -261,7 +261,8 @@ function TopUrbanismo() {
         "Fecha_Creación": created_at_raw.slice(0, 10),
         "Días Hábiles": diasHabiles,
         Tipo_Cliente: cliente.client_type_name,
-        plan: cliente.client_plan,
+      plan: `${cliente.plan?.name || "N/A"} (${cliente.plan?.cost || "0"}$)`,
+
 
       
     };
