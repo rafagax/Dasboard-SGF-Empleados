@@ -613,7 +613,9 @@ const urbanismoFiltrado =
             <option value="Todos">Tipo de Cliente/Todos</option>
             <option value="PYME">Pyme</option>
             <option value="RESIDENCIAL">Residenciales</option>
-            <option value="INTERCAMBIO">Institucionales</option>
+            <option value="INTERCAMBIO">Intercambio</option>
+            <option value="EMPLEADO">Empleado</option>
+            <option value="GRATIS">Gratis</option>
           </select>
 
           {/* <select id="migradosSelect" size="2" multiple value={migradosSeleccionados} onChange={handleMigradosChange}>
