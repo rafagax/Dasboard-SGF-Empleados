@@ -693,9 +693,7 @@ function Ventas() {
             <button className="button" onClick={handleTopUrb}>Top Global</button>
           </div>
       
-      <select id="estadoSelect" size="5" multiple value={estadosSeleccionados} onChange={handleEstadoChange}>
-        <option value="Por instalar">Por instalar</option>
-      </select>
+     
 
       <select id="estadoSelect2" size="5" multiple value={estadosSeleccionadosType} onChange={handleEstadoChange2}>
         <option value="Todos">Tipo de Cliente/Todos</option>
@@ -706,7 +704,11 @@ function Ventas() {
         <option value="GRATIS">Gratis</option>
       </select>
 
-      <select id="sectoresSelect" size="5" multiple value={sectoresSeleccionados} onChange={handleSectoresChange}>
+      <select id="estadoSelect" size="1" multiple value={estadosSeleccionados} onChange={handleEstadoChange}>
+        <option value="Por instalar">Por instalar</option>
+      </select>
+      
+      {/* <select id="sectoresSelect" size="5" multiple value={sectoresSeleccionados} onChange={handleSectoresChange}>
         <option value="Todos">Todas las agencias</option>
         <option value="AGENCIA MACARO">AGENCIA MACARO</option>
         <option value="AGENCIA PAYA">AGENCIA PAYA</option>
@@ -722,7 +724,7 @@ function Ventas() {
             </option>
           ))
         )}
-      </select>
+      </select> */}
 
       <button className="buttonIngreso">Total de clientes: {totalClientesGlobal}</button>
       
