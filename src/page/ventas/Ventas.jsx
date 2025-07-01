@@ -649,7 +649,7 @@ function Ventas() {
     <div>
       <LogoTitulo />
       <DropdownMenu />
-      <PageNav />
+     
       
       <select id="estadoSelect" size="5" multiple value={estadosSeleccionados} onChange={handleEstadoChange}>
         <option value="Por instalar">Por instalar</option>
