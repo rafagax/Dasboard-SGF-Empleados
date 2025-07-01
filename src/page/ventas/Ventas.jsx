@@ -488,9 +488,9 @@ function Ventas() {
     });
 
     // Solo mantener los campos necesarios
-    const cleanedData = {
+     const cleanedData = {
       count: allContracts.length,
-      results: allContracts.map(contract => ({
+      results: allContracts.map((contract) => ({
         id: contract.id,
         client_name: contract.client_name,
         client_type_name: contract.client_type_name,
@@ -502,9 +502,11 @@ function Ventas() {
         client_mobile: contract.client_mobile,
         address: contract.address,
         client_identification: contract.client_identification,
-      }))
+        nap_box_name: contract.nap_box?.name || "", // Campo añadido
+        created_at: contract.created_at, // Campo añadido
+        service_detail: contract.service_detail || {}, // Campo añadido
+      })),
     };
-
     setData(cleanedData);
     setError(null);
   } catch (err) {
@@ -550,41 +552,77 @@ function Ventas() {
   };
 
   const handleDownloadExcel = () => {
-    if (!topUrbanismos || topUrbanismos.length === 0) return;
+  const workbook = XLSX.utils.book_new();
 
-    const workbook = XLSX.utils.book_new();
+  // Función para calcular días hábiles entre dos fechas
+  function calcularDiasHabiles(fechaInicio, fechaFin) {
+    let count = 0;
+    let current = new Date(fechaInicio);
 
-    // Generar datos de urbanismos
-    const worksheetData = topUrbanismos.flatMap((urbanismo, index) => {
-      return urbanismo.clientes.map((cliente, clientIndex) => ({
+    while (current <= fechaFin) {
+      const day = current.getDay();
+      if (day !== 0 && day !== 6) {
+        count++;
+      }
+      current.setDate(current.getDate() + 1);
+    }
+    return count;
+  }
+
+  const hoy = new Date();
+
+  const worksheetData = topUrbanismos.flatMap((urbanismo) => {
+    return urbanismo.clientes.map((cliente, clientIndex) => {
+      const service = cliente.service_detail || {};
+      const created_at_raw = cliente.created_at || "";
+      const created_at = created_at_raw ? new Date(created_at_raw) : null;
+      const diasHabiles = created_at ? calcularDiasHabiles(created_at, hoy) : "";
+
+      return {
         "N° Cliente": clientIndex + 1,
-        Cliente: cliente.client_name,
         id: cliente.id,
-        Urbanismo: urbanismo.urbanismo,
-        Estado: cliente.status_name,
-        Sector: cliente.sector_name,
-        Plan: `${cliente.plan.name} (${cliente.plan.cost}$)`,
-        costo_plan: Number(cliente.plan.cost),
+        Cliente: cliente.client_name, 
         Teléfono: cliente.client_mobile,
-        Ciclo: cliente.cycle,
-        address: cliente.address,
-        client_identification: cliente.client_identification,
-      }));
+        Dirección: cliente.address,
+        Urbanismo: urbanismo.urbanismo,
+        "Cédula": cliente.client_identification,
+        "Caja NAP": cliente.nap_box_name || "",
+        IP: service.ip || "",
+        MAC: service.mac || "",
+        "Fecha Creación": created_at_raw.slice(0, 10),
+        "Días Hábiles": diasHabiles,
+        "Tipo Cliente": cliente.client_type_name,
+        Plan: `${cliente.plan?.name || "N/A"} (${cliente.plan?.cost || "0"}$)`,
+      };
     });
+  });
 
-    // Crear la hoja de trabajo con los datos generados
-    const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+  // Ordenar por días hábiles de mayor a menor
+  worksheetData.sort((a, b) => b["Días Hábiles"] - a["Días Hábiles"]);
 
-    // Agregar la hoja de trabajo al libro
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Clientes por Urbanismo");
+  // Crear la hoja de trabajo
+  const worksheet = XLSX.utils.json_to_sheet(worksheetData);
 
-    // Generar el nombre del archivo
-    const estadoSeleccionado = estadosSeleccionados.join("_");
-    const nombreArchivo = `listado_de_clientes_${estadoSeleccionado}.xlsx`;
+  // Ajustar ancho de columnas
+  const columnWidths = Object.keys(worksheetData[0]).map(key => {
+    const maxLength = Math.max(
+      ...worksheetData.map(item => 
+        String(item[key] || "").length
+      ),
+      key.length
+    );
+    return { wch: maxLength + 2 };
+  });
+  worksheet["!cols"] = columnWidths;
 
-    // Descargar el archivo Excel
-    XLSX.writeFile(workbook, nombreArchivo);
-  };
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Clientes");
+
+  // Generar nombre de archivo
+  const estadoSeleccionado = estadosSeleccionados.join("_");
+  const nombreArchivo = `clientes_${estadoSeleccionado}_${new Date().toISOString().slice(0,10)}.xlsx`;
+
+  XLSX.writeFile(workbook, nombreArchivo);
+};
 
   useEffect(() => {
     if (!data || isLoading) return;
@@ -642,14 +680,18 @@ function Ventas() {
     setTopUrbanismos(topUrbanismosCalculados);
   }, [data, isLoading, TopUrb, estadosSeleccionados, estadosSeleccionadosType, migradosSeleccionados, ciclosSeleccionados, sectoresSeleccionados, urbanismosSeleccionados]);
 
-  if (isLoading) return <div>Cargando...</div>;
+  if (isLoading) return <div>Cargando datos porfavor espere ...</div>;
   if (error) return <div>Error: {error.message}</div>;
   
   return (
     <div>
       <LogoTitulo />
       <DropdownMenu />
-     
+      <PageNav />
+      <div>
+            <button className="button" onClick={handleTop10Urb}>Top 10</button>
+            <button className="button" onClick={handleTopUrb}>Top Global</button>
+          </div>
       
       <select id="estadoSelect" size="5" multiple value={estadosSeleccionados} onChange={handleEstadoChange}>
         <option value="Por instalar">Por instalar</option>
