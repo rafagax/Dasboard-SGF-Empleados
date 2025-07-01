@@ -1,12 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
-import PageNav from "../../Componentes/PageNav";
-import LogoTitulo from "../../Componentes/LogoTitulo";
-import { PasswordContext } from "../../PasswordContext/PasswordContext";
-import LogingForm from "../../Componentes/LogingForm";
-import DropdownMenu from "./../../Componentes/DropdownMenu";
-import "./ventas.css"; // Asegúrate de importar el archivo CSS
-import ChartComponent from "../../Componentes/ChartComponent";
-import * as XLSX from "xlsx";
+
 
 // function Ventas() {
 //   const { showPasswordState, data, isLoading, error } = useContext(PasswordContext);
@@ -261,6 +253,16 @@ import * as XLSX from "xlsx";
 
 
 // Mapeo de sectores a agencias
+
+
+import React, { useState, useEffect } from "react";
+import PageNav from "../../Componentes/PageNav";
+import LogoTitulo from "../../Componentes/LogoTitulo";
+import DropdownMenu from "./../../Componentes/DropdownMenu";
+import "./ventas.css";
+import ChartComponent from "../../Componentes/ChartComponent";
+import * as XLSX from "xlsx";
+
 const sectorAgenciaMap = {
   "Guerito": "AGENCIA MACARO",
   "Isaac Oliveira": "AGENCIA MACARO",
@@ -421,13 +423,13 @@ const urbanismosAprobados = {
   ]
 };
 
-
-
+const API_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxOTAxOTc0MTQ4LCJpYXQiOjE3MjA1MzQxNDgsImp0aSI6IjE5YThhNzU0ODg4NzQ5NGM4YjNmZjBjODMxMDIzMzc1IiwidXNlcl9pZCI6MjE4fQ.hgNwOhyqekwEOnV5ij7XsfYMUIGM_gcDWLHeeEzsSio";
+const API_URL = "https://coresisprot.gsoft.app/api/gsoft/thirds/contracts/";
 
 function Ventas() {
-
-  const { showPasswordState, data, isLoading, error } = useContext(PasswordContext);
-
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [data, setData] = useState(null);
   const [TopUrb, setTopUrb] = useState([0, 5000]);
   const [estadosSeleccionados, setEstadosSeleccionados] = useState(["Por instalar"]);
   const [estadosSeleccionadosType, setEstadosSeleccionadosType] = useState(["Todos"]);
@@ -439,6 +441,82 @@ function Ventas() {
   const [ciclosSeleccionados, setCiclosSeleccionados] = useState(["Todos"]);
   const [sectoresSeleccionados, setSectoresSeleccionados] = useState([]);
   const [urbanismosSeleccionados, setUrbanismosSeleccionados] = useState([]);
+
+  // Función para obtener datos de la API
+  const fetchData = async () => {
+  setIsLoading(true);
+  try {
+    // Aumentar el tamaño de página al máximo permitido por la API
+    const pageSize = 500; // Verificar el máximo permitido por la API
+    const url = `${API_URL}?status_name=Por+instalar&page_size=${pageSize}`;
+    
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${API_TOKEN}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error de red: ${response.status}`);
+    }
+
+    const jsonData = await response.json();
+    
+    // Si hay más páginas, obtenemos todas de una vez
+    let allContracts = jsonData.results;
+    let nextPage = jsonData.next;
+    let page = 2;
+    
+    // Obtener todas las páginas restantes en paralelo
+    const totalPages = Math.ceil(jsonData.count / pageSize);
+    const pageRequests = [];
+    
+    for (let i = 2; i <= totalPages; i++) {
+      pageRequests.push(
+        fetch(`${url}&page=${i}`, {
+          headers: {
+            Authorization: `Bearer ${API_TOKEN}`,
+          },
+        }).then(res => res.json())
+      );
+    }
+    
+    // Esperar todas las solicitudes en paralelo
+    const pagesData = await Promise.all(pageRequests);
+    pagesData.forEach(data => {
+      allContracts = allContracts.concat(data.results);
+    });
+
+    // Solo mantener los campos necesarios
+    const cleanedData = {
+      count: allContracts.length,
+      results: allContracts.map(contract => ({
+        id: contract.id,
+        client_name: contract.client_name,
+        client_type_name: contract.client_type_name,
+        status_name: contract.status_name,
+        cycle: contract.cycle,
+        migrate: contract.migrate,
+        sector_name: contract.sector_name,
+        plan: contract.plan,
+        client_mobile: contract.client_mobile,
+        address: contract.address,
+        client_identification: contract.client_identification,
+      }))
+    };
+
+    setData(cleanedData);
+    setError(null);
+  } catch (err) {
+    setError(err);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleTop10Urb = () => setTopUrb([0, 10]);
   const handleTopUrb = () => setTopUrb([0, 3500]);
@@ -472,6 +550,8 @@ function Ventas() {
   };
 
   const handleDownloadExcel = () => {
+    if (!topUrbanismos || topUrbanismos.length === 0) return;
+
     const workbook = XLSX.utils.book_new();
 
     // Generar datos de urbanismos
@@ -495,18 +575,6 @@ function Ventas() {
     // Crear la hoja de trabajo con los datos generados
     const worksheet = XLSX.utils.json_to_sheet(worksheetData);
 
-    // Ajustar el ancho de las columnas
-    const columnWidths = worksheetData.reduce((acc, row) => {
-      Object.keys(row).forEach((key, idx) => {
-        const cellValue = String(row[key]);
-        const currentWidth = acc[idx] || 0;
-        acc[idx] = Math.max(currentWidth, cellValue.length);
-      });
-      return acc;
-    }, []);
-
-    worksheet["!cols"] = columnWidths.map((width) => ({ wpx: width * 6 }));
-
     // Agregar la hoja de trabajo al libro
     XLSX.utils.book_append_sheet(workbook, worksheet, "Clientes por Urbanismo");
 
@@ -519,9 +587,7 @@ function Ventas() {
   };
 
   useEffect(() => {
-    if (!data) return;
-
-   
+    if (!data || isLoading) return;
 
     const urbanismosTotales = data.results
       .filter((servicio) => {
@@ -530,20 +596,20 @@ function Ventas() {
         const migradoFiltrado = migradosSeleccionados.includes("Todos") || migradosSeleccionados.includes(servicio.migrate ? "Migrado" : "No migrado");
         const cicloFiltrado = ciclosSeleccionados.includes("Todos") || ciclosSeleccionados.includes(servicio.cycle ? servicio.cycle.toString() : "");
         const sectorFiltrado =
-  sectoresSeleccionados.length === 0 ||
-  sectoresSeleccionados.includes("Todos") || // Se añade la verificación de "Todos"
-  (servicio.sector_name && sectoresSeleccionados.includes(sectorAgenciaMap[servicio.sector_name]));
-
-const urbanismoFiltrado =
-  urbanismosSeleccionados.length === 0 ||
-  urbanismosSeleccionados.includes("Todos") || // Se añade la verificación de "Todos"
-  (servicio.sector_name && urbanismosSeleccionados.includes(servicio.sector_name));
-
-       
+          sectoresSeleccionados.length === 0 ||
+          sectoresSeleccionados.includes("Todos") ||
+          (servicio.sector_name && sectoresSeleccionados.includes(sectorAgenciaMap[servicio.sector_name]));
+        
+        const urbanismoFiltrado =
+          urbanismosSeleccionados.length === 0 ||
+          urbanismosSeleccionados.includes("Todos") ||
+          (servicio.sector_name && urbanismosSeleccionados.includes(servicio.sector_name));
 
         return estadoFiltrado && tipoFiltrado && migradoFiltrado && cicloFiltrado && sectorFiltrado && urbanismoFiltrado;
       })
       .reduce((acc, curr) => {
+        if (!curr.sector_name) return acc;
+        
         if (!acc[curr.sector_name]) {
           acc[curr.sector_name] = {
             cantidadClientes: 1,
@@ -560,14 +626,10 @@ const urbanismoFiltrado =
         return acc;
       }, {});
 
-  
-
     const urbanismosTotalesArray = Object.keys(urbanismosTotales).map((sector) => ({
       urbanismo: sector,
       ...urbanismosTotales[sector],
     }));
-
-   
 
     urbanismosTotalesArray.sort((a, b) => b.ingresosTotales - a.ingresosTotales);
 
@@ -578,7 +640,7 @@ const urbanismoFiltrado =
     setTotalClientesGlobal(totalClientes);
     setTotalIngresos(ingresosTotalesCalculados);
     setTopUrbanismos(topUrbanismosCalculados);
-  }, [data, TopUrb, estadosSeleccionados, estadosSeleccionadosType, migradosSeleccionados, ciclosSeleccionados, sectoresSeleccionados, urbanismosSeleccionados]);
+  }, [data, isLoading, TopUrb, estadosSeleccionados, estadosSeleccionadosType, migradosSeleccionados, ciclosSeleccionados, sectoresSeleccionados, urbanismosSeleccionados]);
 
   if (isLoading) return <div>Cargando...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -586,90 +648,52 @@ const urbanismoFiltrado =
   return (
     <div>
       <LogoTitulo />
-      {showPasswordState ? (
-        <>
-          <h1>Inicia Sesión</h1>
-          <LogingForm />
-        </>
-      ) : (
-        <>
-          <DropdownMenu />
-          <PageNav />
-          {/* <div>
-            <button className="button" onClick={handleTop10Urb}>Top 10</button>
-            <button className="button" onClick={handleTopUrb}>Top Global</button>
-          </div> */}
+      <DropdownMenu />
+      <PageNav />
+      
+      <select id="estadoSelect" size="5" multiple value={estadosSeleccionados} onChange={handleEstadoChange}>
+        <option value="Por instalar">Por instalar</option>
+      </select>
 
-          <select id="estadoSelect" size="5" multiple value={estadosSeleccionados} onChange={handleEstadoChange}>
-            {/* <option value="Todos">Todos</option>
-            <option value="Activo">Activos</option>
-            <option value="Suspendido">Suspendidos</option> */}
-            <option value="Por instalar">Por instalar</option>
-            {/* <option value="Pausado">Pausado</option>
-            <option value="Cancelado">Cancelados</option> */}
-          </select>
+      <select id="estadoSelect2" size="5" multiple value={estadosSeleccionadosType} onChange={handleEstadoChange2}>
+        <option value="Todos">Tipo de Cliente/Todos</option>
+        <option value="PYME">Pyme</option>
+        <option value="RESIDENCIAL">Residenciales</option>
+        <option value="INTERCAMBIO">Intercambio</option>
+        <option value="EMPLEADO">Empleado</option>
+        <option value="GRATIS">Gratis</option>
+      </select>
 
-          <select id="estadoSelect2" size="5" multiple value={estadosSeleccionadosType} onChange={handleEstadoChange2}>
-            <option value="Todos">Tipo de Cliente/Todos</option>
-            <option value="PYME">Pyme</option>
-            <option value="RESIDENCIAL">Residenciales</option>
-            <option value="INTERCAMBIO">Intercambio</option>
-            <option value="EMPLEADO">Empleado</option>
-            <option value="GRATIS">Gratis</option>
-          </select>
+      <select id="sectoresSelect" size="5" multiple value={sectoresSeleccionados} onChange={handleSectoresChange}>
+        <option value="Todos">Todas las agencias</option>
+        <option value="AGENCIA MACARO">AGENCIA MACARO</option>
+        <option value="AGENCIA PAYA">AGENCIA PAYA</option>
+        <option value="AGENCIA TURMERO">AGENCIA TURMERO</option>
+      </select>
 
-          {/* <select id="migradosSelect" size="2" multiple value={migradosSeleccionados} onChange={handleMigradosChange}>
-            <option value="Todos">Todos</option>
-            <option value="Migrado">Migrados</option>
-            <option value="No migrado">No migrados</option>
-          </select>
+      <select id="urbanismosSelect" size="5" multiple value={urbanismosSeleccionados} onChange={(e) => setUrbanismosSeleccionados(Array.from(e.target.selectedOptions, (option) => option.value))}>
+        <option value="Todos">Todos los urbanismos</option>
+        {sectoresSeleccionados.map((sector) =>
+          urbanismosAprobados[sector]?.map((urbanismo) => (
+            <option key={urbanismo} value={urbanismo}>
+              {urbanismo}
+            </option>
+          ))
+        )}
+      </select>
 
-          <select id="ciclosSelect" size="3" multiple value={ciclosSeleccionados} onChange={handleCiclosChange}>
-            <option value="Todos">Todos</option>
-            <option value="15">Ciclo 15</option>
-            <option value="25">Ciclo 25</option>
-          </select> */}
+      <button className="buttonIngreso">Total de clientes: {totalClientesGlobal}</button>
+      
+      <button className={!handleGrafico2 ? "button" : "buttonCerrar"} onClick={toggleGraficos}>
+        {handleGrafico2 ? "Cerrar Gráficos" : "Abrir Gráficos"}
+      </button>
+      
+      <button className="buttonDescargar" onClick={handleDownloadExcel}>Descargar Excel</button>
 
-          <select id="sectoresSelect" size="5" multiple value={sectoresSeleccionados} onChange={handleSectoresChange}>
-            <option value="Todos">Todas las agencias</option>
-            <option value="AGENCIA MACARO">AGENCIA MACARO</option>
-            <option value="AGENCIA PAYA">AGENCIA PAYA</option>
-            <option value="AGENCIA TURMERO">AGENCIA TURMERO</option>
-          </select>
+      {handleGrafico2 && <ChartComponent urbanismos={topUrbanismos} />}
+      <h3 className="h3">Top Urbanismos</h3>
 
-          <select id="urbanismosSelect" size="5" multiple value={urbanismosSeleccionados} onChange={(e) => setUrbanismosSeleccionados(Array.from(e.target.selectedOptions, (option) => option.value))}>
-            <option value="Todos">Todos los urbanismos</option>
-            {sectoresSeleccionados.map((sector) =>
-              urbanismosAprobados[sector]?.map((urbanismo) => (
-                <option key={urbanismo} value={urbanismo}>
-                  {urbanismo}
-                </option>
-              ))
-            )}
-          </select>
-
-         
-
-        
-
-          <button className="buttonIngreso">Total de clientes: {totalClientesGlobal}</button>
-          {/* <button className="buttonIngreso marginbutton">
-            {estadosSeleccionados.includes("Cancelado")
-              ? `Total de Pérdida: ${totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$`
-              : `Total de Ingresos: ${totalIngresos.toLocaleString("es-ES", { minimumFractionDigits: 2 })}$`}
-          </button> */}
-
-          <button className={!handleGrafico2 ? "button" : "buttonCerrar"} onClick={toggleGraficos}>
-            {handleGrafico2 ? "Cerrar Gráficos" : "Abrir Gráficos"}
-          </button>
-          <button className="buttonDescargar" onClick={handleDownloadExcel}>Descargar Excel</button>
-
-          {handleGrafico2 && <ChartComponent urbanismos={topUrbanismos} />}
-          <h3 className="h3">Top Urbanismos</h3>
-
-          <UrbanismoList urbanismos={topUrbanismos} />
-        </>
-      )}
+      <UrbanismoList urbanismos={topUrbanismos} />
     </div>
   );
 }
@@ -691,14 +715,9 @@ function UrbanismoList({ urbanismos }) {
 
           <br />
           <div className="encabezados">
-  <span><strong>Cantidad de Clientes:</strong> {urbanismo.cantidadClientes}</span>
-  <br />
-  {!(
-    urbanismo.estado === "Cancelado" || urbanismo.estado === "Gratis"
-      
-  )}
-</div>
-
+            <span><strong>Cantidad de Clientes:</strong> {urbanismo.cantidadClientes}</span>
+            <br />
+          </div>
 
           <button onClick={() => toggleMostrarLista(index)} className="mostrar-ocultar">
             {mostrarLista[index] ? "Ocultar Lista" : "Mostrar Lista"}
@@ -725,8 +744,7 @@ function UrbanismoList({ urbanismos }) {
       ))}
     </ul>
   );
-
-
-
 }
-  export default Ventas;
+
+export default Ventas;
+ 
