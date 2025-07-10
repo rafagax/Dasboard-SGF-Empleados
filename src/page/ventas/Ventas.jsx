@@ -505,6 +505,7 @@ function Ventas() {
         nap_box_name: contract.nap_box?.name || "", // Campo añadido
         created_at: contract.created_at, // Campo añadido
         service_detail: contract.service_detail || {}, // Campo añadido
+        installation_invoice_cost: contract.installation_invoice_cost,
       })),
     };
     setData(cleanedData);
@@ -593,6 +594,7 @@ function Ventas() {
         "Días Hábiles": diasHabiles,
         "Tipo Cliente": cliente.client_type_name,
         Plan: `${cliente.plan?.name || "N/A"} (${cliente.plan?.cost || "0"}$)`,
+         "Instalacion_Cost": cliente.installation_invoice_cost,
       };
     });
   });
