@@ -12,7 +12,7 @@
   cursor: pointer;
   border-radius: 5px;
   display: flex;
-  align-items: center;
+  align-items:  flex-end;
   position: absolute;
   top: -90px;
   left: auto;
@@ -21,7 +21,7 @@
 
 /* Icono del menú */
 .menu-icon {
-  margin-right: 5px;
+  margin-right: 50px;
 }
 
 /* Contenido del menú desplegable */

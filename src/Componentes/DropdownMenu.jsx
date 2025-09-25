@@ -19,6 +19,11 @@ function DropdownMenu() {
               Top Urbanismos
             </NavLink>
           </li>
+           <li>
+            <NavLink to="/*" className="dropdown-link">
+              Indicadores
+            </NavLink>
+          </li>
           <li>
             <NavLink to="/Indicadores" className="dropdown-link">
               Lista de Clientes
@@ -29,11 +34,7 @@ function DropdownMenu() {
               operaciones
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/*" className="dropdown-link">
-              Equipo de Ventas
-            </NavLink>
-          </li>
+         
           <li>
             <NavLink to="/Admin" className="dropdown-link">
               Adm. Ingresos

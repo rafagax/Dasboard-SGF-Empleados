@@ -1,61 +1,108 @@
 /* PageNotFound.css */
 
-/* Estilos exclusivos para el contenedor */
+/* Estilos para el contenedor principal.
+   "position: relative" es clave para posicionar el logo dentro. */
 .page-not-found {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background: linear-gradient(to bottom right, #1e3c72, #2a5298);
-    color: #fff;
-    font-family: 'Arial', sans-serif;
-    text-align: center;
-    padding: 20px;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #1e3c72, #2a5298);
+  color: #fff;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  padding: 20px;
+  padding-top: 100px; /* Margen superior para evitar que el contenido choque con el menú */
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Estilos para el logo y el texto del autor.
+   "position: absolute" lo saca del flujo normal del documento
+   y lo coloca en la esquina. */
+.report-header-info {
+  position: absolute;
+  top: 100px; /* Ajusta la distancia desde la parte superior */
+  left: 20px; /* Distancia desde la izquierda */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 10;
+}
+
+/* Estilos para la imagen del logo. */
+.company-logo {
+  max-width: 120px; /* Tamaño máximo del logo. Puedes ajustarlo. */
+  height: 50px;
+  margin-bottom: -100px;
+  border-radius: 5px;
+}
+
+/* Estilos para el texto del autor. */
+.author-text {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  text-align: left;
+}
+
+/* Contenedor para los iframes de Power BI */
+.report-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 20px;
+}
+
+/* Estilos para los iframes individuales. */
+.report-container iframe {
+  width: 95%; 
+  height: 600px; 
+  border: 2px solid #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px; 
+}
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+  .report-header-info {
+    top: 80px;
+    left: 15px;
   }
-  
-  /* Imagen responsiva */
-  .page-not-found .construction-image {
-    max-width: 60%; /* Ajuste al 90% del ancho del contenedor */
-    height: auto; /* Mantener proporciones */
-    margin-bottom: 20px;
-    border: 2px solid #fff;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  .company-logo {
+    max-width: 100px;
   }
-  
-  /* Texto estilizado */
-  .page-not-found p {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-top: 10px;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  .author-text {
+    font-size: 0.8rem;
   }
-  
-  /* Responsivo para pantallas más pequeñas */
-  @media (max-width: 768px) {
-    .page-not-found .construction-image {
-      max-width: 70%; /* Imagen más grande en pantallas medianas */
-    }
-  
-    .page-not-found p {
-      font-size: 1.2rem;
-      padding: 8px;
-    }
+
+  .report-container {
+    width: 98%; 
   }
-  
-  @media (max-width: 480px) {
-    .page-not-found .construction-image {
-      max-width: 100%; /* Imagen más grande en teléfonos */
-      height: 40%;
-    }
-  
-    .page-not-found p {
-      font-size: 1rem;
-    }
+
+  .report-container iframe {
+    height: 450px; 
+    width: 100%;
   }
-  
+}
+
+@media (max-width: 480px) {
+  .report-header-info {
+    top: 60px;
+    left: 10px;
+  }
+  .company-logo {
+    max-width: 80px;
+   
+  }
+  .author-text {
+    font-size: 0.7rem;
+  }
+
+  .report-container iframe {
+    height: 300px; 
+  }
+}

@@ -9,15 +9,16 @@ function PageNav() {
         <li>
           <NavLink to="/TopUrbanismo">Top Urbanismos </NavLink>
         </li>
+         <li>
+          <NavLink to="/*">Indicadores </NavLink>
+        </li>
         <li>
           <NavLink to="/Indicadores">Lista de Clientes </NavLink>
         </li>
         <li>
           <NavLink to="/Ventas">Operaciones </NavLink>
         </li>
-        <li>
-          <NavLink to="/*">Vendedores </NavLink>
-        </li>
+       
         <li>
           <NavLink to="/Admin">Adm. Ingresos</NavLink>
         </li>
