@@ -1,43 +1,44 @@
 /* DropdownMenu.css */
 .dropdown-container {
-  position: relative;
+  position: absolute;
 }
 
-/* Botón del menú desplegable */
+/* Botón del menú desplegable */c
 .dropdown-button {
-  background-color: #290fb9cc;
-  color: #cccccc;
-  border: 1px solid #cccccc;
-  padding: 10px 15px;
-  cursor: pointer;
-  border-radius: 5px;
-  display: flex;
-  align-items:  flex-end;
-  position: absolute;
-  top: -60px;
-  left: auto;
-  right: -101px;
+   background-color: #b96a0fcc;
+    color: #eb0c0c;
+    border: 1px solid #ec1414;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    display: flex
+;
+    align-items: center;
+    position: absolute;
+    top: 3px;
+    left: auto;
+    right: 153px;
 }
 
 /* Icono del menú */
 .menu-icon {
-  margin-right: 50px;
+  margin-right: 10px;
 }
 
 /* Contenido del menú desplegable */
 .dropdown-content {
-  position: absolute;
-  top: -65px;
-  left: auto;
-  right: 0;
-  background-color: #0d0d0ecc;
-  border: 1px solid #cccccc;
-  border-top: none;
-  border-radius: 0 0 5px 5px;
-  padding: 10px 0;
-  list-style: none;
-  width: 150px; /* Ajusta el ancho según necesites */
-  display: none; /* Oculto por defecto */
+       position: absolute;
+    top: 32px;
+    left: auto;
+    right: -35px;
+    background-color: #0a0a0ecc;
+    border: 1px solid #cccccc;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    padding: 10px 0;
+    list-style: none;
+    width: 150px;
+    display: none;
 }
 
 /* Enlaces del menú desplegable */
@@ -50,8 +51,8 @@
 }
 
 .dropdown-link:hover {
-  background-color: #f0f0f0;
-  color: black;
+  background-color: #4e74df;
+  color: rgb(16, 20, 221);
 }
 
 /* Botón del menú */
@@ -98,4 +99,23 @@
   .dropdown-container.open .dropdown-content {
     display: block; /* Mostrar el menú desplegable al hacer clic */
   }
+
+.dropdown-button {
+   background-color: #290fb9cc;
+    color: #cccccc;
+    border: 1px solid #cccccc;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    display: flex
+;
+    align-items: center;
+    position: absolute;
+    top: -60px;
+    left: auto;
+    right: -500px;
+}
+
+
+
 }

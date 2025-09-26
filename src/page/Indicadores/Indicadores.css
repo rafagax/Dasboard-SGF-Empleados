@@ -32,7 +32,7 @@
   border-radius: 5px;
   display: flex;
   align-items: center;
-  position: absolute;
+  position: sticky;
   top: -60px;
   left: auto;
   right: -100px;
