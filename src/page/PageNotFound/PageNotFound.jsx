@@ -6,7 +6,7 @@ function PageNotFound() {
   return (
     <div className="page-not-found">
       <DropdownMenu />
-{/* Contenedor para el logo y el texto "Realizado por" */}
+      {/* Contenedor para el logo y el texto "Realizado por" */}
       <div className="report-header-info">
         <img 
           src="./logo_sgf.png" // ¡IMPORTANTE! Reemplaza con la URL de tu logo
@@ -17,12 +17,21 @@ function PageNotFound() {
       </div>
       <PageNav />
       
-      
-
       {/* Contenedor para los informes de Power BI con un diseño responsivo */}
       <div className="report-container">
+        {/* Nuevo informe agregado al inicio */}
         <iframe 
-          title="Ingresos diarios" // El primer informe en tu imagen
+          title="indicadores con api"
+          width="100%" 
+          height="600" 
+          src="https://app.powerbi.com/reportEmbed?reportId=78f2bab4-9a26-4984-ba96-87a16624d95a&autoAuth=true&ctid=f4c24cea-686c-4674-8805-f12b558b2133"
+          frameBorder="0" 
+          allowFullScreen={true}
+          style={{marginBottom: '20px'}}
+        ></iframe>
+
+        <iframe 
+          title="Ingresos diarios" // El primer informe original
           width="100%" 
           height="600" 
           src="https://app.powerbi.com/reportEmbed?reportId=565040ba-9c50-41cb-9f9a-0a658efff269&autoAuth=true&ctid=f4c24cea-686c-4674-8805-f12b558b2133"
@@ -32,15 +41,14 @@ function PageNotFound() {
         ></iframe>
         
         <iframe 
-          title="activos por dia" // El segundo informe en tu imagen
+          title="activos por dia" // El segundo informe original
           width="100%" 
           height="600" 
-          src="https://app.powerbi.com/reportEmbed?reportId=cc94b1f7-a31c-4bd9-b22a-79a0c6d42a5b&autoAuth=true&ctid=f4c24cea-686c-4674-8805-f12b558b2133"
+          src="https://app.powerbi.com/reportEmbed?reportId=949df888-de93-4f99-897e-d230226bbfb8&autoAuth=true&ctid=f4c24cea-686c-4674-8805-f12b558b2133"
           frameBorder="0" 
           allowFullScreen={true}
         ></iframe>
       </div>
-      
     </div>
   );
 }
