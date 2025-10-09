@@ -19,6 +19,11 @@ function PageNotFound() {
       
       {/* Contenedor para los informes de Power BI con un diseño responsivo */}
       <div className="report-container">
+
+
+
+
+
         {/* Nuevo informe agregado al inicio */}
         <iframe 
           title="indicadores con api"
@@ -29,6 +34,8 @@ function PageNotFound() {
           allowFullScreen={true}
           style={{marginBottom: '20px'}}
         ></iframe>
+
+       
 
         <iframe 
           title="Ingresos diarios" // El primer informe original
@@ -48,6 +55,18 @@ function PageNotFound() {
           frameBorder="0" 
           allowFullScreen={true}
         ></iframe>
+
+ {/* Nuevo iframe insertado: VENTAS */}
+        <iframe 
+          title="ventas"
+          width="100%" 
+          height="600"
+          src="https://app.powerbi.com/reportEmbed?reportId=8ccf0fb2-8dbf-48de-b4b7-4029dd8d6288&autoAuth=true&ctid=f4c24cea-686c-4674-8805-f12b558b2133"
+          frameBorder="0" 
+          allowFullScreen={true}
+          style={{marginBottom: '20px'}}
+        ></iframe>
+
       </div>
     </div>
   );
