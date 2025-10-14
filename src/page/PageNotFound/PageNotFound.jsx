@@ -58,10 +58,10 @@ function PageNotFound() {
 
  {/* Nuevo iframe insertado: VENTAS */}
         <iframe 
-          title="ventas"
+          title="ventas Drive" 
           width="100%" 
           height="600"
-          src="https://app.powerbi.com/reportEmbed?reportId=8ccf0fb2-8dbf-48de-b4b7-4029dd8d6288&autoAuth=true&ctid=f4c24cea-686c-4674-8805-f12b558b2133"
+          src="https://app.powerbi.com/reportEmbed?reportId=5d6e8d49-786d-451e-826d-2e75442d8faa&autoAuth=true&ctid=f4c24cea-686c-4674-8805-f12b558b2133"
           frameBorder="0" 
           allowFullScreen={true}
           style={{marginBottom: '20px'}}
@@ -73,3 +73,4 @@ function PageNotFound() {
 }
 
 export default PageNotFound;
+
