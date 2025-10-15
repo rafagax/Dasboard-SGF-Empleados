@@ -181,13 +181,13 @@ const urbanismosAprobados = {
 function TopUrbanismo() {
   const { showPasswordState, data, isLoading, error } = useContext(PasswordContext);
 
-  const [TopUrb, setTopUrb] = useState([0, 10]);
+  const [TopUrb, setTopUrb] = useState([0, 3500]);
   const [estadosSeleccionados, setEstadosSeleccionados] = useState(["Activo"]);
   const [estadosSeleccionadosType, setEstadosSeleccionadosType] = useState(["Todos"]);
   const [totalIngresos, setTotalIngresos] = useState(0);
   const [topUrbanismos, setTopUrbanismos] = useState([]);
   const [totalClientesGlobal, setTotalClientesGlobal] = useState(0);
-  const [handleGrafico2, setHandleGrafico2] = useState(true);
+  const [handleGrafico2, setHandleGrafico2] = useState(false);
   const [migradosSeleccionados, setMigradosSeleccionados] = useState(["Todos"]);
   const [ciclosSeleccionados, setCiclosSeleccionados] = useState(["Todos"]);
   const [sectoresSeleccionados, setSectoresSeleccionados] = useState([]);
