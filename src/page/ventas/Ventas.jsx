@@ -693,7 +693,7 @@ function Ventas() {
       <div>
             <button className="button" onClick={handleTop10Urb}>Top 10</button>
             <button className="button" onClick={handleTopUrb}>Top Global</button>
-          </div>
+      </div>
       
      
 
@@ -736,12 +736,29 @@ function Ventas() {
       
       <button className="buttonDescargar" onClick={handleDownloadExcel}>Descargar Excel</button>
 
-      {handleGrafico2 && <ChartComponent urbanismos={topUrbanismos} />}
+      {/* {handleGrafico2 && <ChartComponent urbanismos={topUrbanismos} />} */}
       <h3 className="h3">Top Urbanismos</h3>
 
       <UrbanismoList urbanismos={topUrbanismos} />
+{/* ======= INDICADORES POWER BI (AL FINAL) ======= */}
+      <div className="report-container" style={{ marginTop: "24px" }}></div>
+       <h3 className="h3">Indicadores de Ventas (Power BI)</h3>
+
+      { (
+          <iframe
+            title="ventas Drive"
+            width="100%"
+            height="600"
+            src="https://app.powerbi.com/reportEmbed?reportId=5d6e8d49-786d-451e-826d-2e75442d8faa&autoAuth=true&ctid=f4c24cea-686c-4674-8805-f12b558b2133"
+            frameBorder="0"
+            allowFullScreen={true}
+            style={{ marginBottom: "20px" }}
+          ></iframe>
+ )}
     </div>
   );
+
+  
 }
 
 function UrbanismoList({ urbanismos }) {
