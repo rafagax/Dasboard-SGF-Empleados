@@ -1,268 +1,13 @@
-
-
-// function Ventas() {
-//   const { showPasswordState, data, isLoading, error } = useContext(PasswordContext);
-
-//   const [TopUrb, setTopUrb] = useState([0, 3500]);
-//   const [estadosSeleccionados, setEstadosSeleccionados] = useState(["mesActual"]);
-//   const [estadosSeleccionadosType, setEstadosSeleccionadosType] = useState(["Todos"]);
-//   const [Ventasdelanoactual, setVentasdelanoactual] = useState([]);
-//   const [totalIngresos, setTotalIngresos] = useState(0);
-//   const [totalClientesGlobal, setTotalClientesGlobal] = useState(0);
-//   const [sumatoriaPrecios, SetsumatoriaPrecios] = useState(0);
-  
-
-//   useEffect(() => {
-//     if (!data) return;
-
-//     // función para calcular el último día del mes
-//     function ultimoDiaDelMes(año, mes) {
-//       return new Date(año, mes + 1, 0);
-//     }
-
-//     const fechaActual = new Date();
-//     const añoActual = fechaActual.getFullYear();
-//     const mesActual = fechaActual.getMonth();
-
-//     const fechasMes = [
-//       { mes: 0, nombre: "Enero" },
-//       { mes: 1, nombre: "Febrero" },
-//       { mes: 2, nombre: "Marzo" },
-//       { mes: 3, nombre: "Abril" },
-//       { mes: 4, nombre: "Mayo" },
-//       { mes: 5, nombre: "Junio" },
-//       { mes: 6, nombre: "Julio" },
-//     ];
-
-//     const filtroFechas = fechasMes.map(({ mes, nombre }) => ({
-//       nombre,
-//       inicio: new Date(añoActual, mes, 1),
-//       fin: ultimoDiaDelMes(añoActual, mes)
-//     }));
-
-//     const primerDiaAñoActual = new Date(añoActual, 0, 1);
-//     const ultimoDiaAñoActual = new Date(añoActual, 11, 31);
-//     const primerDiaAñoPasado = new Date(añoActual - 1, 0, 1);
-//     const ultimoDiaAñoPasado = new Date(añoActual - 1, 11, 31);
-//     const primerDiadelMes = new Date(añoActual, mesActual, 1);
-//     const ultimoDiadelMes = ultimoDiaDelMes(añoActual, mesActual);
-
-//     const ventasFiltradas = data.results.filter(venta => {
-//       const fechaInstalacionStr = venta.fecha_instalacion;
-//       const [fecha, hora] = fechaInstalacionStr.split(' ');
-//       const [dia, mes, año] = fecha.split('/');
-//       const ventaFecha = new Date(año, mes - 1, dia, ...hora.split(':'));
-
-//       if (venta.id_servicio === 3219 || venta.id_servicio === 3218 || venta.id_servicio === 3226) {
-//         return false;
-//       }
-
-//       const filtroAnualActual = estadosSeleccionados.includes("Anual") &&
-//         (ventaFecha >= primerDiaAñoActual && ventaFecha <= ultimoDiaAñoActual);
-//       const filtroAnualPasado = estadosSeleccionados.includes("Año Pasado") &&
-//         (ventaFecha >= primerDiaAñoPasado && ventaFecha <= ultimoDiaAñoPasado);
-//       const filtroMensual = estadosSeleccionados.includes("Mensual") &&
-//         (ventaFecha >= primerDiadelMes && ventaFecha <= ultimoDiadelMes);
-
-//       const filtroMeses = filtroFechas.some(({ nombre, inicio, fin }) =>
-//         estadosSeleccionados.includes(nombre) && (ventaFecha >= inicio && ventaFecha <= fin)
-//       );
-
-//       const tipoFiltrado = estadosSeleccionadosType.includes("Todos") ||
-//         estadosSeleccionadosType.includes(venta.informacion_adicional);
-
-//       return (filtroAnualActual || filtroAnualPasado || filtroMensual || filtroMeses) && tipoFiltrado;
-//     });
-
-//     const dataFiltradaConTipoDeServicio = ventasFiltradas.reduce((acc, curr) => {
-//       if (!acc[curr.localidad]) {
-//         acc[curr.localidad] = {
-//           cantidadClientes: 1,
-//           costodeinstalacionTotales: parseFloat(curr.costo_instalacion) || 0,
-//           costodePlanesTotales: parseFloat(curr.precio_plan) || 0,
-//           tipo: curr.informacion_adicional,
-//         };
-//       } else {
-//         acc[curr.localidad].cantidadClientes++;
-//         acc[curr.localidad].costodeinstalacionTotales += parseFloat(curr.costo_instalacion) || 0;
-//         acc[curr.localidad].costodePlanesTotales += parseFloat(curr.precio_plan) || 0;
-//       }
-//       return acc;
-//     }, {});
-
-//     const urbanismosTotalesArray = Object.keys(dataFiltradaConTipoDeServicio).map(
-//       localidad => ({
-//         urbanismo: localidad,
-//         ...dataFiltradaConTipoDeServicio[localidad],
-//       })
-//     );
-
-//     urbanismosTotalesArray.sort((a, b) => b.cantidadClientes - a.cantidadClientes);
-
-//     const topUrbanismosCalculados = urbanismosTotalesArray.slice(TopUrb[0], TopUrb[1]);
-//     setVentasdelanoactual(topUrbanismosCalculados);
-
-//     const ingresosTotalesCalculados = urbanismosTotalesArray.reduce(
-//       (acc, curr) => acc + curr.costodeinstalacionTotales,
-//       0
-//     );
-//     const totalClientes = urbanismosTotalesArray.reduce(
-//       (acc, curr) => acc + curr.cantidadClientes,
-//       0
-//     );
-
-    
-//   const sumatoriaPrecios = urbanismosTotalesArray.reduce(
-//     (acc, curr) => acc + curr.costodePlanesTotales,
-//     0
-//   );
-
-
-//     setTotalIngresos(ingresosTotalesCalculados);
-//     setTotalClientesGlobal(totalClientes);
-//     SetsumatoriaPrecios(sumatoriaPrecios)
-//   }, [data, TopUrb, estadosSeleccionados, estadosSeleccionadosType]);
-
-//   if (isLoading) return <div>Cargando...</div>;
-//   if (error) return <div>Error: {error.message}</div>;
-
-//   return (
-//     <div className="ventas-container">
-//       <LogoTitulo />
-//       {showPasswordState ? (
-//         <div className="login-section">
-//           <h1>Inicia Sesión</h1>
-//           <LogingForm />
-//         </div>
-//       ) : (
-//         <div className="ventas-content">
-//           <DropdownMenu />
-//           <PageNav />
-
-//           <div className="selectors-container">
-//             <select
-//               id="estadoSelect"
-//               size="5"
-//               multiple
-//               value={estadosSeleccionados}
-//               onChange={(event) => {
-//                 const selectedOptions = Array.from(
-//                   event.target.selectedOptions,
-//                   (option) => option.value
-//                 );
-//                 setEstadosSeleccionados(selectedOptions);
-//               }}
-//               className="estado-select"
-//             >
-//               <option value="Anual">Ventas del año 2024</option>
-//               <option value="Enero">Enero</option>
-//               <option value="Febrero">Febrero</option>
-//               <option value="Marzo">Marzo</option>
-//               <option value="Abril">Abril</option>
-//               <option value="Mayo">Mayo</option>
-//               <option value="Junio">Junio</option>
-//               <option value="Julio">Julio</option>
-//             </select>
-
-//             <select
-//               id="estadoSelect2"
-//               size="5"
-//               multiple
-//               value={estadosSeleccionadosType}
-//               onChange={(event) => {
-//                 const selectedOptions2 = Array.from(
-//                   event.target.selectedOptions,
-//                   (option) => option.value
-//                 );
-//                 setEstadosSeleccionadosType(selectedOptions2);
-//               }}
-//               className="estado-select"
-//             >
-//               <option value="Todos">Tipo de Cliente/Todos</option>
-//               <option value="Pyme">Pyme</option>
-//               <option value="Residencial">Residenciales</option>
-//               <option value="Institucional">Institucionales</option>
-//             </select>
-//           </div>
-
-//           <div className="buttons-container">
-//             <button className="buttonIngreso">
-//               Total de Instalaciones: {totalClientesGlobal}
-//             </button>
-//             <button className="buttonIngreso marginbutton">
-//               Recurrente Ingresos de {estadosSeleccionados.join(", ")}:{" "}
-//               {sumatoriaPrecios.toLocaleString("es-ES", {
-//                 minimumFractionDigits: 2,
-//               })}$
-//             </button>
-
-//             <button className="buttonIngreso marginbutton">
-//               Total de Ingresos por instalación:{" "}
-//               {totalIngresos.toLocaleString("es-ES", {
-//                 minimumFractionDigits: 2,
-//               })}$
-//             </button>
-//             </div>
-
-//           <UrbanismoList urbanismos={Ventasdelanoactual} />
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-// function UrbanismoList({ urbanismos }) {
-//   urbanismos.sort((a, b) => b.costodeinstalacionTotales - a.costodeinstalacionTotales);
-
-//   return (
-//     <ul className="urbanismo-list">
-//       {urbanismos.map((urbanismo, index) => (
-//         <li key={index} className="urbanismo-item encabezados contenedor">
-//         <span>
-//           <strong>{index + 1} - {urbanismo.urbanismo}</strong>
-//         </span>
-//         <br />
-//         <div className="encabezados">
-//           <span>
-//             <strong>Cantidad de Ventas:</strong> {urbanismo.cantidadClientes}
-//           </span>
-//           <br />
-          
-//           <span>
-//             <strong>Ingreso Instalacion:</strong>{" "}
-//             {isNaN(urbanismo.costodeinstalacionTotales) ? 'No disponible' : Math.round(urbanismo.costodeinstalacionTotales)}$
-//           </span>
-          
-//         </div>
-//         <br />
-//         <div>
-//         <span>
-//   <strong>Ingreso Recurrente:</strong>{" "}
-//   {isNaN(urbanismo.costodePlanesTotales) ? 'No disponible' : urbanismo.costodePlanesTotales.toFixed(2)}$
-// </span>
-
-//         </div>
-//         <br />
-//       </li>
-//     ))}
-//   </ul>
-// );
-// }
-
-// export default Ventas;
-
-
-// Mapeo de sectores a agencias
-
-
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PageNav from "../../Componentes/PageNav";
 import LogoTitulo from "../../Componentes/LogoTitulo";
 import DropdownMenu from "./../../Componentes/DropdownMenu";
 import "./ventas.css";
 import ChartComponent from "../../Componentes/ChartComponent";
 import * as XLSX from "xlsx";
+import { PasswordContext } from "../../PasswordContext/PasswordContext";
 
+// ======= Mapeos =======
 const sectorAgenciaMap = {
   "Guerito": "AGENCIA MACARO",
   "Isaac Oliveira": "AGENCIA MACARO",
@@ -301,7 +46,7 @@ const sectorAgenciaMap = {
   "Villa De San Jose": "AGENCIA MACARO",
   "Villa Los Tamarindos": "AGENCIA MACARO",
   "Villas El Carmen": "AGENCIA MACARO",
-  
+
   "1ro de Mayo Norte": "AGENCIA PAYA",
   "1ro de Mayo Sur": "AGENCIA PAYA",
   "Antigua Hacienda De Paya": "AGENCIA PAYA",
@@ -345,7 +90,7 @@ const sectorAgenciaMap = {
   "Vallecito": "AGENCIA PAYA",
   "Vista Hermosa": "AGENCIA PAYA",
   "Antigua Hacienda De Paya II": "AGENCIA PAYA",
-  
+
   "Calle Peñalver": "AGENCIA TURMERO",
   "Callejon 17": "AGENCIA TURMERO",
   "Callejon Cañaveral": "AGENCIA TURMERO",
@@ -381,9 +126,7 @@ const sectorAgenciaMap = {
   "Villeguita": "AGENCIA TURMERO",
   "Villa Caribe": "AGENCIA TURMERO",
   "Casco de Turmero": "AGENCIA TURMERO",
-
 };
-
 
 const urbanismosAprobados = {
   "AGENCIA MACARO": [
@@ -423,10 +166,13 @@ const urbanismosAprobados = {
   ]
 };
 
+// ======= API =======
 const API_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxOTAxOTc0MTQ4LCJpYXQiOjE3MjA1MzQxNDgsImp0aSI6IjE5YThhNzU0ODg4NzQ5NGM4YjNmZjBjODMxMDIzMzc1IiwidXNlcl9pZCI6MjE4fQ.hgNwOhyqekwEOnV5ij7XsfYMUIGM_gcDWLHeeEzsSio";
 const API_URL = "https://coresisprot.gsoft.app/api/gsoft/thirds/contracts/";
 
 function Ventas() {
+  const { role } = useContext(PasswordContext); // ⬅️ para filtrar iframes por rol
+
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
@@ -442,84 +188,67 @@ function Ventas() {
   const [sectoresSeleccionados, setSectoresSeleccionados] = useState([]);
   const [urbanismosSeleccionados, setUrbanismosSeleccionados] = useState([]);
 
-  // Función para obtener datos de la API
+  // ======= Fetch principal =======
   const fetchData = async () => {
-  setIsLoading(true);
-  try {
-    // Aumentar el tamaño de página al máximo permitido por la API
-    const pageSize = 500; // Verificar el máximo permitido por la API
-    const url = `${API_URL}?status_name=Por+instalar&page_size=${pageSize}`;
-    
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${API_TOKEN}`,
-      },
-    });
+    setIsLoading(true);
+    try {
+      const pageSize = 500; // máximo por página
+      const url = `${API_URL}?status_name=Por+instalar&page_size=${pageSize}`;
 
-    if (!response.ok) {
-      throw new Error(`Error de red: ${response.status}`);
+      const response = await fetch(url, {
+        headers: { Authorization: `Bearer ${API_TOKEN}` },
+      });
+
+      if (!response.ok) throw new Error(`Error de red: ${response.status}`);
+      const jsonData = await response.json();
+
+      // Paginación en paralelo
+      let allContracts = jsonData.results;
+      const totalPages = Math.ceil(jsonData.count / pageSize);
+      const pageRequests = [];
+
+      for (let i = 2; i <= totalPages; i++) {
+        pageRequests.push(
+          fetch(`${url}&page=${i}`, {
+            headers: { Authorization: `Bearer ${API_TOKEN}` },
+          }).then((res) => res.json())
+        );
+      }
+
+      const pagesData = await Promise.all(pageRequests);
+      pagesData.forEach((d) => { allContracts = allContracts.concat(d.results); });
+
+      const cleanedData = {
+        count: allContracts.length,
+        results: allContracts.map((contract) => ({
+          id: contract.id,
+          client_name: contract.client_name,
+          client_type_name: contract.client_type_name,
+          status_name: contract.status_name,
+          cycle: contract.cycle,
+          migrate: contract.migrate,
+          sector_name: contract.sector_name,
+          plan: contract.plan,
+          client_mobile: contract.client_mobile,
+          address: contract.address,
+          client_identification: contract.client_identification,
+          nap_box_name: contract.nap_box?.name || "",
+          created_at: contract.created_at,
+          service_detail: contract.service_detail || {},
+          installation_invoice_cost: contract.installation_invoice_cost,
+        })),
+      };
+
+      setData(cleanedData);
+      setError(null);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-    const jsonData = await response.json();
-    
-    // Si hay más páginas, obtenemos todas de una vez
-    let allContracts = jsonData.results;
-    let nextPage = jsonData.next;
-    let page = 2;
-    
-    // Obtener todas las páginas restantes en paralelo
-    const totalPages = Math.ceil(jsonData.count / pageSize);
-    const pageRequests = [];
-    
-    for (let i = 2; i <= totalPages; i++) {
-      pageRequests.push(
-        fetch(`${url}&page=${i}`, {
-          headers: {
-            Authorization: `Bearer ${API_TOKEN}`,
-          },
-        }).then(res => res.json())
-      );
-    }
-    
-    // Esperar todas las solicitudes en paralelo
-    const pagesData = await Promise.all(pageRequests);
-    pagesData.forEach(data => {
-      allContracts = allContracts.concat(data.results);
-    });
-
-    // Solo mantener los campos necesarios
-     const cleanedData = {
-      count: allContracts.length,
-      results: allContracts.map((contract) => ({
-        id: contract.id,
-        client_name: contract.client_name,
-        client_type_name: contract.client_type_name,
-        status_name: contract.status_name,
-        cycle: contract.cycle,
-        migrate: contract.migrate,
-        sector_name: contract.sector_name,
-        plan: contract.plan,
-        client_mobile: contract.client_mobile,
-        address: contract.address,
-        client_identification: contract.client_identification,
-        nap_box_name: contract.nap_box?.name || "", // Campo añadido
-        created_at: contract.created_at, // Campo añadido
-        service_detail: contract.service_detail || {}, // Campo añadido
-        installation_invoice_cost: contract.installation_invoice_cost,
-      })),
-    };
-    setData(cleanedData);
-    setError(null);
-  } catch (err) {
-    setError(err);
-  } finally {
-    setIsLoading(false);
-  }
-};
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useEffect(() => { fetchData(); }, []);
 
   const handleTop10Urb = () => setTopUrb([0, 10]);
   const handleTopUrb = () => setTopUrb([0, 3500]);
@@ -527,7 +256,7 @@ function Ventas() {
   const handleSectoresChange = (event) => {
     const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
     setSectoresSeleccionados(selectedOptions);
-    setUrbanismosSeleccionados([]); // Resetear la selección de urbanismos
+    setUrbanismosSeleccionados([]);
   };
 
   const handleMigradosChange = (event) => {
@@ -553,93 +282,88 @@ function Ventas() {
   };
 
   const handleDownloadExcel = () => {
-  const workbook = XLSX.utils.book_new();
+    const workbook = XLSX.utils.book_new();
 
-  // Función para calcular días hábiles entre dos fechas
-  function calcularDiasHabiles(fechaInicio, fechaFin) {
-    let count = 0;
-    let current = new Date(fechaInicio);
-
-    while (current <= fechaFin) {
-      const day = current.getDay();
-      if (day !== 0 && day !== 6) {
-        count++;
+    function calcularDiasHabiles(fechaInicio, fechaFin) {
+      let count = 0;
+      let current = new Date(fechaInicio);
+      while (current <= fechaFin) {
+        const day = current.getDay();
+        if (day !== 0 && day !== 6) count++;
+        current.setDate(current.getDate() + 1);
       }
-      current.setDate(current.getDate() + 1);
+      return count;
     }
-    return count;
-  }
 
-  const hoy = new Date();
+    const hoy = new Date();
 
-  const worksheetData = topUrbanismos.flatMap((urbanismo) => {
-    return urbanismo.clientes.map((cliente, clientIndex) => {
-      const service = cliente.service_detail || {};
-      const created_at_raw = cliente.created_at || "";
-      const created_at = created_at_raw ? new Date(created_at_raw) : null;
-      const diasHabiles = created_at ? calcularDiasHabiles(created_at, hoy) : "";
+    const worksheetData = topUrbanismos.flatMap((urbanismo) =>
+      urbanismo.clientes.map((cliente, clientIndex) => {
+        const service = cliente.service_detail || {};
+        const created_at_raw = cliente.created_at || "";
+        const created_at = created_at_raw ? new Date(created_at_raw) : null;
+        const diasHabiles = created_at ? calcularDiasHabiles(created_at, hoy) : "";
 
-      return {
-        "N° Cliente": clientIndex + 1,
-        id: cliente.id,
-        Cliente: cliente.client_name, 
-        Teléfono: cliente.client_mobile,
-        Dirección: cliente.address,
-        Urbanismo: urbanismo.urbanismo,
-        "Cédula": cliente.client_identification,
-        "Caja NAP": cliente.nap_box_name || "",
-        IP: service.ip || "",
-        MAC: service.mac || "",
-        "Fecha Creación": created_at_raw.slice(0, 10),
-        "Días Hábiles": diasHabiles,
-        "Tipo Cliente": cliente.client_type_name,
-        Plan: `${cliente.plan?.name || "N/A"} (${cliente.plan?.cost || "0"}$)`,
-         "Instalacion_Cost": cliente.installation_invoice_cost,
-      };
-    });
-  });
-
-  // Ordenar por días hábiles de mayor a menor
-  worksheetData.sort((a, b) => b["Días Hábiles"] - a["Días Hábiles"]);
-
-  // Crear la hoja de trabajo
-  const worksheet = XLSX.utils.json_to_sheet(worksheetData);
-
-  // Ajustar ancho de columnas
-  const columnWidths = Object.keys(worksheetData[0]).map(key => {
-    const maxLength = Math.max(
-      ...worksheetData.map(item => 
-        String(item[key] || "").length
-      ),
-      key.length
+        return {
+          "N° Cliente": clientIndex + 1,
+          id: cliente.id,
+          Cliente: cliente.client_name,
+          Teléfono: cliente.client_mobile,
+          Dirección: cliente.address,
+          Urbanismo: urbanismo.urbanismo,
+          "Cédula": cliente.client_identification,
+          "Caja NAP": cliente.nap_box_name || "",
+          IP: service.ip || "",
+          MAC: service.mac || "",
+          "Fecha Creación": created_at_raw.slice(0, 10),
+          "Días Hábiles": diasHabiles,
+          "Tipo Cliente": cliente.client_type_name,
+          Plan: `${cliente.plan?.name || "N/A"} (${cliente.plan?.cost || "0"}$)`,
+          "Instalacion_Cost": cliente.installation_invoice_cost,
+        };
+      })
     );
-    return { wch: maxLength + 2 };
-  });
-  worksheet["!cols"] = columnWidths;
 
-  XLSX.utils.book_append_sheet(workbook, worksheet, "Clientes");
+    worksheetData.sort((a, b) => b["Días Hábiles"] - a["Días Hábiles"]);
 
-  // Generar nombre de archivo
-  const estadoSeleccionado = estadosSeleccionados.join("_");
-  const nombreArchivo = `clientes_${estadoSeleccionado}_${new Date().toISOString().slice(0,10)}.xlsx`;
+    const worksheet = XLSX.utils.json_to_sheet(worksheetData);
 
-  XLSX.writeFile(workbook, nombreArchivo);
-};
+    const columnWidths = Object.keys(worksheetData[0]).map((key) => {
+      const maxLength = Math.max(
+        ...worksheetData.map((item) => String(item[key] || "").length),
+        key.length
+      );
+      return { wch: maxLength + 2 };
+    });
+    worksheet["!cols"] = columnWidths;
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Clientes");
+
+    const estadoSeleccionado = estadosSeleccionados.join("_");
+    const nombreArchivo = `clientes_${estadoSeleccionado}_${new Date().toISOString().slice(0, 10)}.xlsx`;
+    XLSX.writeFile(workbook, nombreArchivo);
+  };
 
   useEffect(() => {
     if (!data || isLoading) return;
 
     const urbanismosTotales = data.results
       .filter((servicio) => {
-        const estadoFiltrado = estadosSeleccionados.includes("Todos") || estadosSeleccionados.includes(servicio.status_name);
-        const tipoFiltrado = estadosSeleccionadosType.includes("Todos") || estadosSeleccionadosType.includes(servicio.client_type_name);
-        const migradoFiltrado = migradosSeleccionados.includes("Todos") || migradosSeleccionados.includes(servicio.migrate ? "Migrado" : "No migrado");
-        const cicloFiltrado = ciclosSeleccionados.includes("Todos") || ciclosSeleccionados.includes(servicio.cycle ? servicio.cycle.toString() : "");
+        const estadoFiltrado =
+          estadosSeleccionados.includes("Todos") || estadosSeleccionados.includes(servicio.status_name);
+        const tipoFiltrado =
+          estadosSeleccionadosType.includes("Todos") || estadosSeleccionadosType.includes(servicio.client_type_name);
+        const migradoFiltrado =
+          migradosSeleccionados.includes("Todos") ||
+          migradosSeleccionados.includes(servicio.migrate ? "Migrado" : "No migrado");
+        const cicloFiltrado =
+          ciclosSeleccionados.includes("Todos") ||
+          ciclosSeleccionados.includes(servicio.cycle ? servicio.cycle.toString() : "");
         const sectorFiltrado =
           sectoresSeleccionados.length === 0 ||
           sectoresSeleccionados.includes("Todos") ||
           (servicio.sector_name && sectoresSeleccionados.includes(sectorAgenciaMap[servicio.sector_name]));
-        
+
         const urbanismoFiltrado =
           urbanismosSeleccionados.length === 0 ||
           urbanismosSeleccionados.includes("Todos") ||
@@ -649,7 +373,6 @@ function Ventas() {
       })
       .reduce((acc, curr) => {
         if (!curr.sector_name) return acc;
-        
         if (!acc[curr.sector_name]) {
           acc[curr.sector_name] = {
             cantidadClientes: 1,
@@ -680,22 +403,31 @@ function Ventas() {
     setTotalClientesGlobal(totalClientes);
     setTotalIngresos(ingresosTotalesCalculados);
     setTopUrbanismos(topUrbanismosCalculados);
-  }, [data, isLoading, TopUrb, estadosSeleccionados, estadosSeleccionadosType, migradosSeleccionados, ciclosSeleccionados, sectoresSeleccionados, urbanismosSeleccionados]);
+  }, [
+    data,
+    isLoading,
+    TopUrb,
+    estadosSeleccionados,
+    estadosSeleccionadosType,
+    migradosSeleccionados,
+    ciclosSeleccionados,
+    sectoresSeleccionados,
+    urbanismosSeleccionados,
+  ]);
 
   if (isLoading) return <div>Cargando datos porfavor espere ...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  
+
   return (
     <div>
       <LogoTitulo />
       <DropdownMenu />
       <PageNav />
+
       <div>
-            <button className="button" onClick={handleTop10Urb}>Top 10</button>
-            <button className="button" onClick={handleTopUrb}>Top Global</button>
-          </div>
-      
-     
+        <button className="button" onClick={handleTop10Urb}>Top 10</button>
+        <button className="button" onClick={handleTopUrb}>Top Global</button>
+      </div>
 
       <select id="estadoSelect2" size="5" multiple value={estadosSeleccionadosType} onChange={handleEstadoChange2}>
         <option value="Todos">Tipo de Cliente/Todos</option>
@@ -709,37 +441,39 @@ function Ventas() {
       <select id="estadoSelect" size="1" multiple value={estadosSeleccionados} onChange={handleEstadoChange}>
         <option value="Por instalar">Por instalar</option>
       </select>
-      
-      {/* <select id="sectoresSelect" size="5" multiple value={sectoresSeleccionados} onChange={handleSectoresChange}>
-        <option value="Todos">Todas las agencias</option>
-        <option value="AGENCIA MACARO">AGENCIA MACARO</option>
-        <option value="AGENCIA PAYA">AGENCIA PAYA</option>
-        <option value="AGENCIA TURMERO">AGENCIA TURMERO</option>
-      </select>
-
-      <select id="urbanismosSelect" size="5" multiple value={urbanismosSeleccionados} onChange={(e) => setUrbanismosSeleccionados(Array.from(e.target.selectedOptions, (option) => option.value))}>
-        <option value="Todos">Todos los urbanismos</option>
-        {sectoresSeleccionados.map((sector) =>
-          urbanismosAprobados[sector]?.map((urbanismo) => (
-            <option key={urbanismo} value={urbanismo}>
-              {urbanismo}
-            </option>
-          ))
-        )}
-      </select> */}
 
       <button className="buttonIngreso">Total de clientes: {totalClientesGlobal}</button>
-      
+
       <button className={!handleGrafico2 ? "button" : "buttonCerrar"} onClick={toggleGraficos}>
         {handleGrafico2 ? "Cerrar Gráficos" : "Abrir Gráficos"}
       </button>
-      
+
       <button className="buttonDescargar" onClick={handleDownloadExcel}>Descargar Excel</button>
 
       {handleGrafico2 && <ChartComponent urbanismos={topUrbanismos} />}
       <h3 className="h3">Top Urbanismos</h3>
 
       <UrbanismoList urbanismos={topUrbanismos} />
+
+      {/* ======= INDICADORES POWER BI (AL FINAL) ======= */}
+      <div className="report-container" style={{ marginTop: "24px" }}>
+        <h3 className="h3">Indicadores de Ventas (Power BI)</h3>
+
+        {/* Ventas y Admin ven el de ventas */}
+        {(role === "admin*/" || role === "ventas") && (
+          <iframe
+            title="ventas Drive"
+            width="100%"
+            height="600"
+            src="https://app.powerbi.com/reportEmbed?reportId=5d6e8d49-786d-451e-826d-2e75442d8faa&autoAuth=true&ctid=f4c24cea-686c-4674-8805-f12b558b2133"
+            frameBorder="0"
+            allowFullScreen={true}
+            style={{ marginBottom: "20px" }}
+          ></iframe>
+       
+        )}
+      </div>
+      {/* ======= FIN INDICADORES POWER BI ======= */}
     </div>
   );
 }
@@ -748,7 +482,7 @@ function UrbanismoList({ urbanismos }) {
   const [mostrarLista, setMostrarLista] = useState({});
 
   const toggleMostrarLista = (index) => {
-    setMostrarLista((prevState) => ({ ...prevState, [index]: !prevState[index] }));
+    setMostrarLista((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
   return (
@@ -758,7 +492,6 @@ function UrbanismoList({ urbanismos }) {
           <span className="urbanismo-nombre">
             {index + 1}. {urbanismo.urbanismo}
           </span>
-
           <br />
           <div className="encabezados">
             <span><strong>Cantidad de Clientes:</strong> {urbanismo.cantidadClientes}</span>
@@ -793,4 +526,3 @@ function UrbanismoList({ urbanismos }) {
 }
 
 export default Ventas;
- 
