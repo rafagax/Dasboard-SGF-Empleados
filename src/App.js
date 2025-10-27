@@ -76,7 +76,7 @@ function App() {
           <Route
             path="*"
             element={
-              <ProtectedRoute roles={["admin", "ventas"]}>
+              <ProtectedRoute roles={["admin", ""]}>
                 <PageNotFound />
               </ProtectedRoute>
             }
