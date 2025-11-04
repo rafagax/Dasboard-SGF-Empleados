@@ -506,6 +506,7 @@ function Ventas() {
         created_at: contract.created_at, // Campo añadido
         service_detail: contract.service_detail || {}, // Campo añadido
         installation_invoice_cost: contract.installation_invoice_cost,
+        created_by_name: contract.created_by_name
       })),
     };
     setData(cleanedData);
@@ -595,6 +596,7 @@ function Ventas() {
         "Tipo Cliente": cliente.client_type_name,
         Plan: `${cliente.plan?.name || "N/A"} (${cliente.plan?.cost || "0"}$)`,
          "Instalacion_Cost": cliente.installation_invoice_cost,
+        "Vendedor": cliente.created_by_name
       };
     });
   });
@@ -798,6 +800,7 @@ function UrbanismoList({ urbanismos }) {
                     <p><strong>Teléfono:</strong> {cliente.client_mobile}</p>
                     <p><strong>Ciclo:</strong> {cliente.cycle}</p>
                     <p><strong>Dirección:</strong> {cliente.address}</p>
+                    <p><strong>Vendedor:</strong> {cliente.created_by_name}</p>
                   </li>
                 ))}
               </ul>
